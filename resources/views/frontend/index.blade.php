@@ -1,5 +1,13 @@
 @extends('frontend.layouts.app')
 @push('custom-css')
+    <style>
+        .product-image{
+            max-height: 100px;
+        }
+        #cart_mobile a{
+            color: black;
+        }
+    </style>
 @endpush
 @section('page_conent')
     <div class="main-content-wrapper home-page">
@@ -53,8 +61,8 @@
                     <div class="row">
                     @forelse($products as $product)
                             <div class="col-6 col-md-3 p-3">
-                                <div class="card text-center">
-                                    <img class="card-img-top img{{ $product->id }}" src='{{ asset("$product->photo") }}'
+                                <div class="card text-center h-100">
+                                    <img class="card-img-top product-image img{{ $product->id }}" src='{{ asset("$product->photo") }}'
                                         alt="{{ $product->title }}" title="{{ $product->title }}">
                                     <div class="card-body">
                                         <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
@@ -88,12 +96,16 @@
         window.addEventListener('load', function() {
 
             //add to card
-            // localStorage.clear();
+        
             let add_to_card_btn = document.querySelectorAll('.add-to-cart');
-            let cart = document.querySelector('#cart');
-            let cart_mobile = document.querySelector('#cart_mobile');
             let count_mobile = document.querySelector('.count-mobile');
-
+            let count = document.querySelectorAll('.count');
+            let counts = document.querySelector('.count');
+            if(localStorage.getItem('product_storage')){
+            let product_number =  Object.keys(JSON.parse(localStorage.getItem('product_storage'))).length;
+            count_mobile.innerText =product_number;
+            counts.innerText =product_number+' item(s)';
+            }
             add_to_card_btn.forEach(item => {
                 item.addEventListener('click', function(event) {
                     event.preventDefault();
@@ -102,9 +114,7 @@
                     let img = document.querySelector(`.img${product_id}`).getAttribute('src');
                     let price = document.querySelector(`.price${product_id}`).textContent;
                     let dis_price = document.querySelector(`.dis-price${product_id}`).textContent;
-                    let count = document.querySelectorAll('.count');
-                    
-
+                   
                     if (localStorage.getItem('product_storage')) {
                         let product_storage = JSON.parse(localStorage.getItem('product_storage'));
                         if (product_storage[product_id]) {
