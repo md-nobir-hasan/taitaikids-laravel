@@ -1,80 +1,30 @@
 @extends('frontend.layouts.app')
 @push('custom-css')
+<style>
+    .card{
+        font-size: 16px;
+    }
+    #cart_show input{
+        width: 28px;
+        text-align: center;
+        border: 1px solid #cd9f9f;
+    }
+    #cart_show img{
+        max-height: 50px;
+    }
+
+</style>
 @endpush
 @section('page_conent')
     <div class="main-content-wrapper home-page">
         <div class="wrapper-container p-top-15">
-            {{-- Main banner  --}}
-            <div id="carouselExampleIndicators" class="carousel slide mt-2" data-bs-ride="true">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
+            <div class="card text-center">
+                <div class="card-header">
+                    <h1>Your all selected products</h1>
                 </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{{ asset('assets/images/default/1.webp') }}" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('assets/images/default/4.webp') }}" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('assets/images/default/1.webp') }}" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-
-            {{-- End main banner  --}}
-
-            <div class="product-module best-deals">
-                <div class="category-title">
-                    <h3 align='center'>Products</h3>
-                    {{-- <a class="see-all-header" href="#"><span>See All</span></a> --}}
-                    <div class="border-lines">
-                        <span class="line-shape"></span>
-                        <span class="line-shape small"></span>
-                    </div>
-                </div>
-                <div class="product-listing bg-white">
-
-                    <div class="row">
-                    @forelse($products as $product)
-                            <div class="col-6 col-md-3 p-3">
-                                <div class="card text-center">
-                                    <img class="card-img-top img{{ $product->id }}" src='{{ asset("$product->photo") }}'
-                                        alt="{{ $product->title }}" title="{{ $product->title }}">
-                                    <div class="card-body">
-                                        <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
-                                        <div class="card-text mb-4">
-                                            <span class="rounded rounded-pill p-2 "><span
-                                                    class="price{{ $product->id }}">৳{{ $product->price }}</span> <sub><s
-                                                        class="ml-3 dis-price{{ $product->id }}">{{ $product->price - ($product->discount ?? 0) }}৳</s></sub></span>
-
-                                        </div>
-                                        <a href="" class="btn btn-primary add-to-cart" id="{{ $product->id }}">
-                                            <i class="fa fa-cart-plus"></i>
-                                            <span>Add to Cart</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            @empty
-                            <p style='width:100%; text-align:center;'>There are no products</p>
-                            @endforelse
-                        </div>
-
+                <div class="card-body" id="cart_show">
+                    
+                   
                 </div>
             </div>
 
@@ -85,6 +35,87 @@
 
 @push('custom-js')
     <script>
-      
+        var d = document;
+      let card_body = document.getElementById("cart_show");
+      let cart_product = JSON.parse(localStorage.getItem('product_storage'));
+      let appends = `<div class="row mb-2">
+                        <div class="col-3">
+                            <span>Image</span>
+                        </div>
+                        <div class="col-3">
+                             <span>Price</span>
+                         </div>
+                        <div class="col-3 ps-4 text-start">
+                           Qty 
+                        </div>
+                        <div class="col-3">
+                           <span>Total</span>
+                         </div>
+                    </div>`;
+      for(let item in cart_product){
+         appends += `<div class="row mb-2 ">
+                        <div class="col-3">
+                           <img src="${cart_product[item].img}" alt="">
+                        </div>
+                        <div class="col-3 m-auto">
+                             <span class='price${item}'>${cart_product[item].dis_price}</span>৳
+                         </div>
+                        <div class="col-3 m-auto">
+                            <div class="input-group">
+                                <button class="btn btn-sm btn-outline-primary plus-btn" id='${item}' type="button">+</button>
+                                <input type="number" value="1" step="1">
+                                <button class="btn btn-sm btn-outline-danger minus-btn" id='${item}' type="button">-</button>
+                              </div>
+                        </div>
+                        <div class="col-3 m-auto">
+                           <span class="total-price${item}">850</span>৳
+                         </div>
+                    </div>`;
+                  
+           
+      }
+      card_body.innerHTML = appends;
+        let plus_btn = document.querySelectorAll('.plus-btn'); 
+        let minus_btn = document.querySelectorAll('.minus-btn'); 
+        
+      increment(plus_btn);
+      decrement(minus_btn);
+
+      function increment(element){
+        element.forEach(item =>{
+            item.addEventListener('click',function(event){
+                if(Number(this.nextElementSibling.value)>4){
+                    alert("You can't select more than 5 product")
+                }else{
+                    let id = this.getAttribute('id');
+                    let price = Number(d.querySelector(`.price${id}`).textContent);
+                    let total_priceE = d.querySelector(`.total-price${id}`);
+                    let qty = Number(this.nextElementSibling.value) +1;
+                    this.nextElementSibling.value =  qty ;
+                    let total_price = price * qty;
+                    total_priceE.textContent = total_price;
+                    
+                }
+            });
+        });
+      }
+      function decrement(element){
+        element.forEach(item =>{
+            item.addEventListener('click',function(event){
+                if(Number(this.previousElementSibling.value)<2){
+                    alert("You have to select at least one product")
+                }else{
+                    let id = this.getAttribute('id');
+                    let price = Number(d.querySelector(`.price${id}`).textContent);
+                    let total_priceE = d.querySelector(`.total-price${id}`);
+                    let qty = Number(this.previousElementSibling.value) - 1;
+                    this.previousElementSibling.value = qty  ;
+
+                    let total_price = price * qty;
+                    total_priceE.textContent = total_price;
+                }
+            });
+        })
+      }
     </script>
 @endpush
