@@ -15,30 +15,31 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('product_title');
-            $table->string('first_name');
-            $table->text('address1');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('shipping_id')->nullable();
+            $table->string('name');
+            $table->text('address');
+            $table->text('address2')->nullable();
             $table->string('phone');
             $table->string('email')->nullable();
             $table->integer('quantity');
-            $table->unsignedBigInteger('shipping_id')->nullable();
-            $table->string('pamyment_methods');
+            $table->string('payment_method')->nullable();
             $table->string('payment_number')->nullable();
-            $table->string('order_number')->unique();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('order_number');
             $table->float('sub_total')->nullable();
             $table->float('coupon')->nullable();
             $table->float('total_amount')->nullable();
-            $table->string('payment_method')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('order_status');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
-            $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('SET NULL');
-            $table->string('last_name')->nullable();
             $table->string('country')->nullable();
+            $table->string('district')->nullable();
+            $table->string('thana')->nullable();
             $table->string('post_code')->nullable();
-            $table->text('address2')->nullable();
-              $table->string('status');
+            $table->string('status');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('SET NULL');
+            $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('SET NULL');
             $table->timestamps();
         });
     }

@@ -27,9 +27,44 @@ class Order extends Model
     public function shipping(){
         return $this->belongsTo(Shipping::class,'shipping_id');
     }
+
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function subTotal(){
+        $orders = Order::find($this->id);
+        $product_price = $orders->product->price;
+        $qty = $orders->quantity;
+        if($orders->product->discount){
+            $discount = $orders->product->discount;
+            $price_after_dis = $product_price - $discount;
+            $sub_total = $price_after_dis * $qty;
+            return $sub_total;
+        }else{
+            $sub_total = $product_price * $qty;
+            return $sub_total;
+        }
+    }
+
+    public function total(){
+        $orders = Order::find($this->id);
+        $sub_total = $orders->subTotal();
+       
+            if($orders->shipping_id){
+                $shipping_price = $orders->shipping->price; 
+                $total = $shipping_price+$sub_total;
+                return $total;
+            }else{
+                return $sub_total;
+            }
+      
     }
 
 }

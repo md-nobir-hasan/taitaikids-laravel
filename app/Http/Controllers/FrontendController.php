@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\CompanyInfo;
 use App\Models\CompanyContact;
@@ -103,6 +104,14 @@ class FrontendController extends Controller
             $n['company_contact_info'] = CompanyContact::first();
             $n['shipping'] = Shipping::all();
             $n['products'] = Product::where('cat_id',$id)->get();
+            return view('frontend.index',$n);
+        }
+    }
+
+    public function categoryWiseShow($id = null){
+        if($id){
+            $n['products'] = Product::where('cat_id',$id)->get();
+            $n['category'] = Category::find($id);
             return view('frontend.index',$n);
         }
     }

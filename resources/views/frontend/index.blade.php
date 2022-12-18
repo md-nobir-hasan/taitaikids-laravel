@@ -79,7 +79,11 @@
                                 </div>
                             </div>
                             @empty
-                            <p style='width:100%; text-align:center;'>There are no products</p>
+                                @if(isset($category))
+                                    <p class="w-100 text-center">There are no products in {{$category->title}} category</p>
+                                @else
+                                    <p class="w-100 text-center">There are no products</p>
+                                @endif
                             @endforelse
                         </div>
 
@@ -94,62 +98,7 @@
 @push('custom-js')
     <script>
         window.addEventListener('load', function() {
-
-            //add to card
-        
-            let add_to_card_btn = document.querySelectorAll('.add-to-cart');
-            let count_mobile = document.querySelector('.count-mobile');
-            let count = document.querySelectorAll('.count');
-            let counts = document.querySelector('.count');
-            if(localStorage.getItem('product_storage')){
-            let product_number =  Object.keys(JSON.parse(localStorage.getItem('product_storage'))).length;
-            count_mobile.innerText =product_number;
-            counts.innerText =product_number+' item(s)';
-            }
-            add_to_card_btn.forEach(item => {
-                item.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    let product_id = this.getAttribute('id');
-                    let title = document.querySelector(`.title${product_id}`).textContent;
-                    let img = document.querySelector(`.img${product_id}`).getAttribute('src');
-                    let price = document.querySelector(`.price${product_id}`).textContent;
-                    let dis_price = document.querySelector(`.dis-price${product_id}`).textContent;
-                   
-                    if (localStorage.getItem('product_storage')) {
-                        let product_storage = JSON.parse(localStorage.getItem('product_storage'));
-                        if (product_storage[product_id]) {
-                            alert('This product already added to your card');
-                        } else {
-                            product_storage[product_id] = {
-                                'title': title,
-                                'img': img,
-                                'price': price,
-                                'dis_price': dis_price
-                            };
-                            localStorage.setItem('product_storage', JSON.stringify(product_storage));
-                            count.forEach(item =>{
-                                item.innerText =Object.keys(product_storage).length +' item(s)';
-                            })
-                            count_mobile.innerText =Object.keys(product_storage).length;
-                            alert('This product added to your card');
-                        }
-                    } else {
-                        let product_storage = {};
-                        product_storage[product_id] = {
-                            'title': title,
-                            'img': img,
-                            'price': price,
-                            'dis_price': dis_price
-                        };
-                        localStorage.setItem('product_storage', JSON.stringify(product_storage));
-                        count.forEach(item =>{
-                                item.innerText = Object.keys(product_storage).length +' item(s)';
-                            });
-                            count_mobile.innerText =Object.keys(product_storage).length;
-                        alert('This product added to your card');
-                    }
-                });
-            });
+           
         });
     </script>
 @endpush

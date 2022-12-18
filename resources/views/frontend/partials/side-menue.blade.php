@@ -1,6 +1,6 @@
 <div class="menu-wrapper" id="side_nav">
     <div class="logo">
-        <a href="#">
+        <a href="{{route('home')}}">
             {{-- <img src="{{asset('assets/images/default/site-logo.png')}}"
                     alt="Babycare" title="Babycare" height="60px"> --}}
             <h1> {{ $site_info->name }}</h1>
@@ -12,7 +12,7 @@
                 @foreach ($categories as $category)
                     <li class="has-child">
                         {{-- <i class="fa-solid fa-child"></i> --}}
-                        <a href="">
+                        <a href="{{route('category',[$category->id])}}">
                             <span>{{$category->title}}</span>
                         </a>
                     </li>

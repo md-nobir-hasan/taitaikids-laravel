@@ -52,90 +52,64 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $rule = [
-            'first_name'=>'string|required',
-            'quantity'=>'required',
+            'name'=>'string|required',
             'shipping_id'=>'required',
             'quantity'=>'required',
-            'address1'=>'string|required',
+            'address'=>'string|required',
             'phone'=>'numeric|required',
         ];
         $msg = [];
         $attributes = [
-            'first_name'=>'First Name',
-            'address1'=>'Address',
+            'name'=>'First Name',
+            'address'=>'Address',
             'phone'=>'Phone Number',
             'post_code'=>'string|nullable',
-            'shipping'=>'Shipping Method'
+            'shipping_id'=>'Shipping Method'
         ];
         Validator::make($request->all(),$rule,$msg,$attributes);
-
-        $insert=new Order();
-        $insert->product_title = $request->product_title;
-        $insert->first_name = $request->first_name;
-        $insert->address1 = $request->address1;
-        $insert->phone = $request->phone;
-        $insert->quantity = 1;
-        $insert->shipping_id = $request->shipping_id;
-        $insert->pamyment_methods = 1;
-        $insert->payment_number = 1234;
-        // = $request->payment_number;
         $order_number = 'ORD-'.strtoupper(Str::random(10));
-        $insert->order_number = $order_number;
-        $insert->email = 'nobir.wd@gmail.com';
-        $shipping_price = Shipping::find($request->shipping_id);
-
-        // calculation for percentage
-        // $discount = $request->product_price*$request->discount/100;
-        // $discount_price = $request->discount_price;
-        // $subtotal =$discount_price*$request->quantity;
-        // $total = $subtotal + $shipping_price->price;
-
-        // calculation for amount
-        $discount = $request->discount;
-        $total = $request->product_price - $discount;
-
-
-        $insert->total_amount = $total;
-        $insert->sub_total = $total;
-
-        $insert->country = 'null';
-        $insert->last_name = 'null';
-
-        // Status Status
-
-        $order_statuses = OrderStatus::first();
-        if($order_statuses !=null){
-            $insert->order_status = $order_statuses->name;
-        }else{
-             $insert->order_status = 'New';
+        foreach($request->product as $key => $qty){
+            $insert=new Order();
+            $insert->product_id = $key;
+            $insert->shipping_id = $request->shipping_id;
+            $insert->user_id = $request->user_id;
+            $insert->name = $request->name;
+            $insert->address = $request->address;
+            $insert->phone = $request->phone;
+            $insert->quantity = $qty['qty'];
+            $insert->payment_method = $request->payment_method;
+            $insert->payment_number = $request->payment_number;
+            $insert->order_number = $order_number;
+            $insert->email = $request->email;
+            $insert->country = $request->country;
+            $insert->district = $request->district;
+            $insert->thana = $request->thana;
+    
+            // Status Status
+    
+            $order_statuses = OrderStatus::first();
+            if($order_statuses !=null){
+                $insert->order_status = $order_statuses->name;
+            }else{
+                 $insert->order_status = 'New';
+            }
+             $insert->status = 'active';
+            $insert->save();
+    
+            $product_update = Product::find($key);
+           if($product_update != null){
+                $product_update->stock = $product_update->stock - $qty['qty'];
+                $product_update->save();
+           }
         }
-         $insert->status = 'active';
-        $insert->save();
 
-        $product_update = Product::find($request->product_id);
-       if($product_update != null){
-         $product_update->stock = $product_update->stock - $request->quantity;
-        $product_update->save();
-       }
+       $n['order_details'] = Order::where('phone',$request->phone)
+                                    ->where('order_number',$order_number)
+                                    ->get();
+        $count = count( $n['order_details']);
 
-        $order_details['order_number'] = $order_number;
-          $order_details['date'] = date('d-m-Y');
-          $order_details['total'] = $total;
-          $order_details['product_price'] = $request->product_price;
-          $order_details['discount'] = $request->discount;
-          $order_details['discount_taka'] = $discount;
-          $order_details['qty'] = $request->quantity;
-          $order_details['payment_methdod'] = 'হোম ডেলিভারি';
-          $order_details['product_name'] = $request->product_title;
-          $order_details['subtotal'] = $total;
-          $order_details['shipping'] = $shipping_price;
-          $order_details['client_name'] = $request->first_name;
-          $order_details['client_phone'] = $request->phone;
-          $order_details['client_address'] = $request->address1;
-          $order_details['company_contact'] = CompanyContact::first();
-
-        request()->session()->flash('success','Your product successfully placed in order');
-        return view('frontend.thanks',$order_details);
+        request()->session()->flash('success',"$count order successfully placed");
+        return redirect()->route('order.thanks',[$order_number]);
     }
 
     /**
@@ -339,12 +313,17 @@ class OrderController extends Controller
         }
         return $data;
     }
-    
-    public function thanks(){
-        
-        return view('frontend.thanks');
-    }
+
     public function checkout(){
-        return view('frontend.checkout');
+        $n['shippings'] = Shipping::all();
+      
+        return view('frontend.checkout',$n);
     }
+
+    public function thanks($order_no){
+        $n['orders'] = Order::where('order_number',$order_no)->get();
+        return view('frontend.thanks',$n);
+    }
+
+    
 }

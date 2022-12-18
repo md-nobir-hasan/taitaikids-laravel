@@ -34,7 +34,6 @@
                     </div>
                     <div class="card-body">
                         @include('backend.partial.flush-message')
-
                         <div class="table-responsive">
                             <table id="table" class="table table-striped">
                                 <thead>
@@ -44,8 +43,12 @@
                                         <th>Name</th>
                                         <th>phone</th>
                                         <th>Address</th>
-                                        <th>Total Amount</th>
-                                        <th>Payment Method</th>
+                                        <th>Proudct Title</th>
+                                        <th>Proudct Price</th>
+                                        <th>Quantity</th>
+                                        {{-- <th>Shipping</th> --}}
+                                        {{-- <th>Total Amount</th> --}}
+                                        {{-- <th>Payment Method</th> --}}
                                         <th>Ordered Time</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -53,16 +56,23 @@
                                 </thead>
                                 <tbody>
                                     @forelse($orders as $key => $order)
+                                   
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $order->order_number }}</td>
-                                            <td>{{ $order->first_name }}</td>
+                                            <td>{{ $order->name }}</td>
                                             <td>{{ $order->phone }}</td>
-                                            <td>{{ $order->address1 }}</td>
-                                            <td>TK{{ number_format($order->total_amount, 2) }}
-                                            </td>
+                                            <td>{{ $order->address }}</td>
+                                            <td>{{ $order->product->title }}</td>
+                                            <td>{{ $order->product->price }}</td>
+                                            <td>{{ $order->quantity }}</td>
+
+                                            {{-- <td>{{ $order->shipping->type  .'('.$order->shipping->price.')৳' }}</td> --}}
+                                            {{-- <td>{{ ($order->quantity * $order->product->price)+ $order->shipping->price}}</td>
+                                            <td>{{ $order->quantity->payment_method ?? 'Cash on Delivery'}}
+                                            </td> --}}
                                             {{-- <td>{{ $order->payment_number }}</td> --}}
-                                            <td>{{ $order->pamyment_methods }}</td>
+                                            {{-- <td>{{ $order->pamyment_method}}</td> --}}
                                             <td>{{ $order->created_at->diffForHumans() }}</td>
                                             <td>
                                                 <a class="btn">
@@ -129,13 +139,13 @@
                         orientation: 'potrait',
                         pagesize: 'LETTER',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     }, 'pageLength'
                 ]

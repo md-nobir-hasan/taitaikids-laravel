@@ -176,7 +176,7 @@ button, input, optgroup, select, textarea {
 }
 .menu-wrapper .logo {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 56px;
     padding-bottom: 20px;
 }
 .menu-wrapper .menu-nav {
@@ -819,4 +819,7 @@ a .nav-awsome-icon{
 
 .card-text span{
     background-color: #FFDFCB;
+}
+#cart a{
+    color: black;
 }

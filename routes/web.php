@@ -24,9 +24,10 @@ use App\Http\Controllers\OrderStatusController;
 
  //frontend route
  Route::get('/', [FrontendController::class,'index'])->name('home');
+ Route::get('/category-product/{id}', [FrontendController::class,'categoryWiseShow'])->name('category');
  Route::post('order/store',[OrderController::class,'store'])->name('order.store');
  Route::get('product/fetch/{id}',[FrontendController::class,'productFetch'])->name('product.fetch');
- Route::get('order/thank-you-page',[OrderController::class,'thanks'])->name('order.thanks');
+ Route::get('order/thank-you-page/{order}',[OrderController::class,'thanks'])->name('order.thanks');
  Route::get('order/checkout',[OrderController::class,'checkout'])->name('checkout');
  //end frontend route
 
