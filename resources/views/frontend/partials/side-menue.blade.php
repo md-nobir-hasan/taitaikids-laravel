@@ -1,19 +1,19 @@
 <div class="menu-wrapper" id="side_nav">
-    <div class="logo">
-        <a href="{{route('home')}}">
+    <a href="{{ route('home') }}">
+        <div class="logo">
             {{-- <img src="{{asset('assets/images/default/site-logo.png')}}"
                     alt="Babycare" title="Babycare" height="60px"> --}}
             <h1> {{ $site_info->name }}</h1>
-        </a>
-    </div>
+        </div>
+    </a>
     <div class="menu-nav">
         <nav class="nav">
             <ul class="responsive-menu">
                 @foreach ($categories as $category)
                     <li class="has-child">
                         {{-- <i class="fa-solid fa-child"></i> --}}
-                        <a href="{{route('category',[$category->id])}}">
-                            <span>{{$category->title}}</span>
+                        <a href="{{ route('category', [$category->id]) }}">
+                            <span>{{ $category->title }}</span>
                         </a>
                     </li>
                 @endforeach

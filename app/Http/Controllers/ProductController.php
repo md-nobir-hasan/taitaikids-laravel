@@ -32,9 +32,6 @@ class ProductController extends Controller
     public function create()
     {
         $product = Product::all();
-        if(count($product)>1){
-            return redirect()->route('home');
-        }
         $n['brands']=Brand::get();
         $n['category']=Category::all();
 

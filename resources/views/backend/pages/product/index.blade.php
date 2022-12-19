@@ -19,7 +19,7 @@
                             <h4>View Product</h4>
                         </span>
                         <span class="float-right">
-                            @if (count($products) < 2)
+                            @if (count($products) < 7)
                                 <a href="{{ route('product.create') }}" class="btn btn-info">Add new Product</a>
                             @endif
                         </span>
@@ -66,19 +66,9 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if ($value->photo)
-                                                    @php
-                                                        $photo = explode(',', $value->photo);
-                                                        // dd($photo);
-                                                    @endphp
-                                                    <img src="{{ asset('product/' . $value->photo) }}"
-                                                        style="height: 100px; width: 150px;" class="img-fluid zoom"
-                                                        style="max-width:80px" alt="{{ $value->photo }}">
-                                                @else
-                                                    <img src="{{ asset('product/' . $value->photo) }}"
-                                                        style="height: 100px; width: 150px;" class="img-fluid"
-                                                        style="max-width:80px" alt="avatar.png">
-                                                @endif
+                                                <img src="{{ asset($value->photo) }}"
+                                                    style="height: 100px; width: 150px;" class="img-fluid zoom"
+                                                    style="max-width:80px" alt="{{ $value->photo }}">
                                             </td>
                                             <td>
                                                 @if ($value->status == 'active')

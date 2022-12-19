@@ -4,14 +4,15 @@
         /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+            -webkit-appearance: none;
+            margin: 0;
         }
 
         /* Firefox */
         input[type=number] {
-        -moz-appearance: textfield;
+            -moz-appearance: textfield;
         }
+
         .card {
             font-size: 15px;
         }
@@ -34,6 +35,10 @@
 
         .header {
             font-weight: bold;
+        }
+        .total-div span{
+            font-weight: bold;
+            font-size: 17px;
         }
     </style>
 @endpush
@@ -111,7 +116,6 @@
 
 @push('custom-js')
     <script>
-        console.log(count_mobile)
         var d = document;
         let card_body = document.getElementById("cart_show");
         let cart_product = JSON.parse(localStorage.getItem('product_storage'));
@@ -130,6 +134,7 @@
                             </div>
                            
                     </div>`;
+
         for (let item in cart_product) {
             appends += `<div class="row mb-2 ">
                         <div class="col-3">
@@ -146,19 +151,34 @@
                               </div>
                         </div>
                         <div class="col-2 m-auto">
-                           <span class="total-price${item}">850</span>৳
+                           <span class="total-price${item} total-count">${cart_product[item].dis_price}</span>৳
                          </div>
                          <div class="col-2 m-auto">
-                            <span class='text-danger remove-product' id='${item}'><i class="fa-solid fa-trash"></i></span>
+                            <span class='text-danger remove-product' id='${item}' role='button'><i class="fa-solid fa-trash"></i></span>
                          </div>
                     </div>`;
 
 
         }
+        appends += `<div class='row total-div'>
+                        <div class='col-md-12'>
+                            <hr>
+                        </div>
+                        <div class='col-7 text-end'>
+                            <span>Total Price:</span>
+                        </div>
+                        <div class='col-5 text-start' >
+                            <span id='toal'></span>
+                        </div>
+                        
+                    </div>`;
         card_body.innerHTML = appends;
         let plus_btn = document.querySelectorAll('.plus-btn');
         let minus_btn = document.querySelectorAll('.minus-btn');
+        let total_count = document.querySelectorAll('.total-count');
+        let total_element = document.getElementById('toal');
 
+        totalPriceCount();
         increment(plus_btn);
         decrement(minus_btn);
 
@@ -175,7 +195,7 @@
                         this.nextElementSibling.value = qty;
                         let total_price = price * qty;
                         total_priceE.textContent = total_price;
-
+                        totalPriceCount();
                     }
                 });
             });
@@ -192,12 +212,20 @@
                         let total_priceE = d.querySelector(`.total-price${id}`);
                         let qty = Number(this.previousElementSibling.value) - 1;
                         this.previousElementSibling.value = qty;
-
                         let total_price = price * qty;
                         total_priceE.textContent = total_price;
+                        totalPriceCount();
                     }
                 });
             })
+        }
+       
+        function totalPriceCount() {
+            let total = 0;
+            total_count.forEach((element, index) => {
+                total += Number(element.textContent);
+            });
+            total_element.textContent = total;
         }
 
         //remove product from cart 

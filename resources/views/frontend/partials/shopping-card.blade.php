@@ -1,8 +1,9 @@
-<div class="cart-shopping-btn mc-toggler" id="cart">
-    <a href="{{ route('checkout') }}">
-        <i class="fa fa-shopping-cart"></i>
+
+<a href="{{ route('checkout') }}">
+    <div class="cart-shopping-btn mc-toggler" id="cart">
+        <i class="fa fa-shopping-cart "></i>
         <div class="total-items">
-            <p class="count">0 item(s)</p>
+            <p class="count text-dark">0 item(s)</p>
         </div>
-    </a>
-</div>
+    </div>
+</a>

@@ -172,7 +172,7 @@ button, input, optgroup, select, textarea {
     background: #005662;
     height: 100%;
     overflow-y: auto;
-    z-index: 20;
+    z-index: 999;
 }
 .menu-wrapper .logo {
     text-align: center;

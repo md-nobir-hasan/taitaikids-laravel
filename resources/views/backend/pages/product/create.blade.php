@@ -31,7 +31,7 @@
                                         <label for="inputTitle" class="col-form-label">Title <span
                                                 class="text-danger">*</span></label>
                                         <input id="inputTitle" type="text" name="title" placeholder="Enter title"
-                                            value="{{ old('title') }}" class="form-control">
+                                            value="{{ old('title') }}" class="form-control" required>
                                         @error('title')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -56,7 +56,7 @@
 
                                     <div class="form-group">
                                         <label for="cat_id">Category <span class="text-danger">*</span></label>
-                                        <select name="cat_id" id="cat_id" class="form-control">
+                                        <select name="cat_id" id="cat_id" class="form-control" required>
                                             <option value="">--Select any category--</option>
                                             @foreach ($category as $key => $cat_data)
                                                 <option value='{{ $cat_data->id }}'>{{ $cat_data->title }}</option>
@@ -68,7 +68,7 @@
                                         <label for="price" class="col-form-label">Price(TK) <span
                                                 class="text-danger">*</span></label>
                                         <input id="price" type="number" name="price" placeholder="Enter price"
-                                            value="{{ old('price') }}" class="form-control">
+                                            value="{{ old('price') }}" class="form-control" required>
                                         @error('price')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -78,7 +78,7 @@
                                         <label for="discouns" class="col-form-label">Discount(amount)</label>
                                         <input id="discounts" type="number" name="discount" min="0"
                                             placeholder="Enter discount" value="{{ old('discount') }}"
-                                            class="form-control">
+                                            class="form-control" required>
                                         @error('discount')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -97,7 +97,7 @@
 
                                     <div class="form-group">
                                         <label for="condition">Condition</label>
-                                        <select name="condition" class="form-control">
+                                        <select name="condition" class="form-control" required>
                                             <option value="">--Select Condition--</option>
                                             <option value="default">Default</option>
                                             <option value="new">New</option>
@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         <label for="stock">Quantity <span class="text-danger">*</span></label>
                                         <input id="quantity" type="number" name="stock" min="0"
-                                            placeholder="Enter quantity" value="{{ old('stock') }}" class="form-control">
+                                            placeholder="Enter quantity" value="{{ old('stock') }}" class="form-control" required>
                                         @error('stock')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -119,7 +119,7 @@
                                                 class="text-danger">*</span></label>
                                         <input id="photo" type="file" name="photo"
                                             placeholder="Enter Product Photo" value="{{ old('photo') }}"
-                                            class="form-control">
+                                            class="form-control" required>
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                         @error('photo')
                                             <span class="text-danger">{{ $message }}</span>
@@ -129,7 +129,7 @@
                                     <div class="form-group">
                                         <label for="status" class="col-form-label">Status <span
                                                 class="text-danger">*</span></label>
-                                        <select name="status" class="form-control">
+                                        <select name="status" class="form-control" required>
                                             <option value="active">Active</option>
                                             <option value="inactive">Inactive</option>
                                         </select>
@@ -165,9 +165,7 @@
                 tabsize: 2,
                 height: 100
             });
-        });
 
-        $(document).ready(function() {
             $('#description').summernote({
                 placeholder: "Write detail description.....",
                 tabsize: 2,
