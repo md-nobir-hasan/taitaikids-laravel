@@ -244,5 +244,6 @@
 
             });
         });
+        
     </script>
 @endpush

@@ -20,6 +20,50 @@
 
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
     @stack('custom-css')
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRDR8R');
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- Meta Pixel Code -->
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '472292044430428');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=472292044430428&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 
 
@@ -96,23 +140,23 @@
         <div class="bottom-bar d-flex flex-wrap justify-content-around">
             <a href="#" class="bottom-item offer">
                 <div class="bottom-item-icon">
-                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                    <i class="fa fa-bookmark text-light" aria-hidden="true"></i>
                 </div>
-                <span class="text">Offers</span>
+                <span class="text text-light">Offers</span>
             </a>
             {{-- href="https://m.me/babycare.bangladesh" --}}
             <a href="javascript::void(0)" class="bottom-item barnd">
                 <div class="bottom-item-icon">
-                    <i class="fa-brands fa-facebook-messenger"></i>
+                    <i class="fa-brands fa-facebook-messenger text-light"></i>
                 </div>
-                <span class="text">Messenger</span>
+                <span class="text text-light">Messenger</span>
             </a>
             <div class="bottom-item cart mc-toggler" id="cart_mobile">
                 <a href="{{ route('checkout') }}">
                     <div class="bottom-item-icon">
-                        <i class="fa fa-shopping-cart"></i>
+                        <i class="fa fa-shopping-cart text-light"></i>
                     </div>
-                    <span class="text">Cart</span>
+                    <span class="text text-light">Cart</span>
                     <span class="value count-mobile">0</span>
                 </a>
             </div>
@@ -126,16 +170,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
     </script>
-     <script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script>
         //load  add to card product
-            let count_mobile = document.querySelector('.count-mobile');
-            let count = document.querySelectorAll('.count');
-            let counts = document.querySelector('.count');
-         if(localStorage.getItem('product_storage')){
-            let product_number =  Object.keys(JSON.parse(localStorage.getItem('product_storage'))).length;
-            count_mobile.innerText =product_number;
-            counts.innerText =product_number+' item(s)';
-            }
+        let count_mobile = document.querySelector('.count-mobile');
+        let count = document.querySelectorAll('.count');
+        let counts = document.querySelector('.count');
+        if (localStorage.getItem('product_storage')) {
+            let product_number = Object.keys(JSON.parse(localStorage.getItem('product_storage'))).length;
+            count_mobile.innerText = product_number;
+            counts.innerText = product_number + ' item(s)';
+        }
         window.addEventListener('load', function() {
             // side navbar tigger 
             let side_nav_tigger = document.querySelector('.menu-nav-bar');
@@ -151,9 +197,9 @@
                 }
             });
 
-             //add to card
-             let add_to_card_btn = document.querySelectorAll('.add-to-cart');
-           
+            //add to card
+            let add_to_card_btn = document.querySelectorAll('.add-to-cart');
+
             add_to_card_btn.forEach(item => {
                 item.addEventListener('click', function(event) {
                     event.preventDefault();
@@ -162,7 +208,7 @@
                     let img = document.querySelector(`.img${product_id}`).getAttribute('src');
                     let price = document.querySelector(`.price${product_id}`).textContent;
                     let dis_price = document.querySelector(`.dis-price${product_id}`).textContent;
-                   
+
                     if (localStorage.getItem('product_storage')) {
                         let product_storage = JSON.parse(localStorage.getItem('product_storage'));
                         if (product_storage[product_id]) {
@@ -174,11 +220,13 @@
                                 'price': price,
                                 'dis_price': dis_price
                             };
-                            localStorage.setItem('product_storage', JSON.stringify(product_storage));
-                            count.forEach(item =>{
-                                item.innerText =Object.keys(product_storage).length +' item(s)';
+                            localStorage.setItem('product_storage', JSON.stringify(
+                            product_storage));
+                            count.forEach(item => {
+                                item.innerText = Object.keys(product_storage).length +
+                                    ' item(s)';
                             })
-                            count_mobile.innerText =Object.keys(product_storage).length;
+                            count_mobile.innerText = Object.keys(product_storage).length;
                             alert('This product added to your card');
                         }
                     } else {
@@ -190,18 +238,48 @@
                             'dis_price': dis_price
                         };
                         localStorage.setItem('product_storage', JSON.stringify(product_storage));
-                        count.forEach(item =>{
-                                item.innerText = Object.keys(product_storage).length +' item(s)';
-                            });
-                            count_mobile.innerText =Object.keys(product_storage).length;
+                        count.forEach(item => {
+                            item.innerText = Object.keys(product_storage).length +
+                                ' item(s)';
+                        });
+                        count_mobile.innerText = Object.keys(product_storage).length;
                         alert('This product added to your card');
                     }
                 });
             });
 
         });
-
     </script>
+
+
+    <script>
+        // $('nav.nav ul li.has-child').on('click',function(){
+        //     $('nav.nav ul li.has-child').each(function(){
+        //         $(this).removeClass('active');
+        //     });
+        //     $(this).addClass('active');
+        // })
+    </script>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WXRDR8R" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    //gtag() configuration
+    <script async src="https://www.googletagmanager.com/gtag/js?id=MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'MEASUREMENT_ID');
+    </script>
+
     @stack('custom-js')
 </body>
 <!-- Mirrored from www.babycare.com.bd/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Dec 2022 18:12:30 GMT -->

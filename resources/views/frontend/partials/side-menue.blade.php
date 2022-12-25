@@ -8,11 +8,12 @@
     </a>
     <div class="menu-nav">
         <nav class="nav">
-            <ul class="responsive-menu">
+            <ul class="responsive-menu w-100">
                 @foreach ($categories as $category)
                     <li class="has-child">
                         {{-- <i class="fa-solid fa-child"></i> --}}
-                        <a href="{{ route('category', [$category->id]) }}">
+                        <a href="{{ route('category', [$category->id]) }}"
+                            class="{{ Request::is("category-product/$category->id") ? 'active' : '' }}">
                             <span>{{ $category->title }}</span>
                         </a>
                     </li>

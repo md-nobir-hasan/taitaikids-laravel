@@ -118,7 +118,7 @@ header {
     display: flex !important;
 }
 .justify-content-between {
-    justify-content: space-between!important;
+    justify-content: space-between !important;
 }
 
 .header-top-bar .search-bar {
@@ -132,7 +132,11 @@ header {
     border-radius: 4px;
     padding-right: 36px;
 }
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
@@ -181,7 +185,6 @@ button, input, optgroup, select, textarea {
 }
 .menu-wrapper .menu-nav {
     padding-bottom: 44px;
-    padding-left: 15px;
 }
 .menu-nav ul li {
     position: relative;
@@ -190,6 +193,7 @@ button, input, optgroup, select, textarea {
 .menu-nav ul li a {
     color: #fff;
     display: block;
+    padding: 2px 20px 2px 20px;
 }
 .overlay {
     content: "";
@@ -332,7 +336,10 @@ button, input, optgroup, select, textarea {
 }
 .bg-white {
     --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-white-rgb),var(--bs-bg-opacity))!important;
+    background-color: rgba(
+        var(--bs-white-rgb),
+        var(--bs-bg-opacity)
+    ) !important;
 }
 .footer-content {
     background: #025563;
@@ -411,7 +418,6 @@ button, input, optgroup, select, textarea {
     font-weight: 700;
     font-size: 12px;
 }
-
 
 /* All mediaquery  */
 @media (max-width: 991px) {
@@ -640,7 +646,7 @@ button, input, optgroup, select, textarea {
         padding-bottom: 83px !important;
     }
     /* added by nobir  */
-    .carousel-inner img{
+    .carousel-inner img {
         max-height: 200px;
     }
 }
@@ -795,8 +801,6 @@ button, input, optgroup, select, textarea {
 }
 /* End all mediaquery  */
 
-
-
 /* my style  */
 
 .logo h1 {
@@ -805,21 +809,34 @@ button, input, optgroup, select, textarea {
 .main-home-banner img {
     max-height: 300px;
 }
-body{
-    font-size:21px !important;
+body {
+    font-size: 21px !important;
 }
 
-a .nav-awsome-icon{
-    margin-left:6%;
-    font-size : 24px;
+a .nav-awsome-icon {
+    margin-left: 6%;
+    font-size: 24px;
 }
-.carousel-inner img{
+.carousel-inner img {
     max-height: 450px;
 }
 
-.card-text span{
-    background-color: #FFDFCB;
+.card-text span {
+    background-color: #ffdfcb;
 }
-#cart a{
+#cart a {
     color: black;
+}
+
+nav.nav ul li.has-child a.active {
+    background-color: black;
+}
+
+.thank-icon {
+    color: green;
+    font-size: 55px;
+}
+.thank-card {
+    margin-top: 115px !important;
+    background-color: yellow;
 }

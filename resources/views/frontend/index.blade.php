@@ -1,10 +1,11 @@
 @extends('frontend.layouts.app')
 @push('custom-css')
     <style>
-        .product-image{
+        .product-image {
             max-height: 100px;
         }
-        #cart_mobile a{
+
+        #cart_mobile a {
             color: black;
         }
     </style>
@@ -59,16 +60,18 @@
                 <div class="product-listing bg-white">
 
                     <div class="row">
-                    @forelse($products as $product)
+                        @forelse($products as $product)
                             <div class="col-6 col-md-3 p-3">
                                 <div class="card text-center h-100">
-                                    <img class="card-img-top product-image img{{ $product->id }}" src='{{ asset("$product->photo") }}'
-                                        alt="{{ $product->title }}" title="{{ $product->title }}">
+                                    <img class="card-img-top product-image img{{ $product->id }}"
+                                        src='{{ asset("$product->photo") }}' alt="{{ $product->title }}"
+                                        title="{{ $product->title }}">
                                     <div class="card-body">
                                         <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
                                         <div class="card-text mb-4">
                                             <span class="rounded rounded-pill p-2 ">৳<span
-                                                    class="dis-price{{ $product->id }}">{{ $product->price - ($product->discount ?? 0) }}</span> <sub><s
+                                                    class="dis-price{{ $product->id }}">{{ $product->price - ($product->discount ?? 0) }}</span>
+                                                <sub><s
                                                         class="ml-3 price{{ $product->id }}">{{ $product->price }}৳</s></sub></span>
 
                                         </div>
@@ -78,14 +81,14 @@
                                     </div>
                                 </div>
                             </div>
-                            @empty
-                                @if(isset($category))
-                                    <p class="w-100 text-center">There are no products in {{$category->title}} category</p>
-                                @else
-                                    <p class="w-100 text-center">There are no products</p>
-                                @endif
-                            @endforelse
-                        </div>
+                        @empty
+                            @if (isset($category))
+                                <p class="w-100 text-center">There are no products in {{ $category->title }} category</p>
+                            @else
+                                <p class="w-100 text-center">There are no products</p>
+                            @endif
+                        @endforelse
+                    </div>
 
                 </div>
             </div>
@@ -94,4 +97,35 @@
         </div>
     </div>
 @endsection
+@push('custom-js')
+    <script>
+        gtag('event', 'screen_view', {
+            'app_name': 'myAppName',
+            'screen_name': 'Home'
+        });
 
+        $('.add-to-cart').on('click', function(e) {
+            e.preventDefault;
+            let index = Number($(this).index('.add-to-cart'));
+            var product_name = $('.card-title');
+            var id = Number($(this).prop('id'));
+            var valu = Number($('.dis-price' + id).text());
+            var price = Number($('.price' + id).text());
+
+            gtag("event", "add_to_cart", {
+                currency: "BDT",
+                value: valu,
+                items: [{
+                    item_id: id,
+                    item_name: product_name,
+                    currency: "BDT",
+                    discount: 2.22,
+                    index: index,
+                    price: price,
+                    quantity: 1
+                }]
+            });
+
+        });
+    </script>
+@endpush
