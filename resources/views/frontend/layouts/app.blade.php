@@ -181,7 +181,7 @@
         var toastr = {
             count: 0,
             toaster_append(msg, class_name) {
-                $('.toastr-div').append(`<div class="toastr ${class_name}">
+                $('.toastr-div').append(`<div class="toastr ${class_name} mt-2">
                                                     <span class="toaster-msg">${msg}</span>
                                                 </div>`);
             },
