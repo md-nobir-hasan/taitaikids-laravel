@@ -187,7 +187,6 @@
             },
             success(msg) {
                 let class_name = 'toastr' + this.count;
-                console.log(this);
                 this.toaster_append(msg, class_name);
 
                 $('.' + class_name).fadeIn(1000);
