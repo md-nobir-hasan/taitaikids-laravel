@@ -253,8 +253,7 @@
                     if (localStorage.getItem('product_storage')) {
                         let product_storage = JSON.parse(localStorage.getItem('product_storage'));
                         if (product_storage[product_id]) {
-                            // alert(');
-                            toastr.success('This product already added to your card')
+                            toastr.error('This product already added to your card')
                         } else {
                             product_storage[product_id] = {
                                 'title': title,
@@ -269,7 +268,6 @@
                                     ' item(s)';
                             })
                             count_mobile.innerText = Object.keys(product_storage).length;
-                            // alert('This product added to your card');
                             toastr.success('This product added to your card')
                         }
                     } else {
@@ -286,7 +284,7 @@
                                 ' item(s)';
                         });
                         count_mobile.innerText = Object.keys(product_storage).length;
-                        alert('This product added to your card');
+                        toastr.success('This product added to your card')
                     }
                 });
             });
