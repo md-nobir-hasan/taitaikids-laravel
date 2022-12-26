@@ -840,3 +840,19 @@ nav.nav ul li.has-child a.active {
     margin-top: 115px !important;
     background-color: yellow;
 }
+
+/* custom toaster  */
+.toastr-div {
+    position: fixed;
+    top: 83px;
+    right: 0px;
+    z-index: 99;
+}
+.toastr {
+    height: 65px;
+    background-color: green;
+    padding: 15px;
+    color: white;
+    border-radius: 10px 0px 0px 10px;
+    display: none;
+}

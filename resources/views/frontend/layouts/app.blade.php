@@ -97,6 +97,9 @@
     @include('frontend.partials.mini-cart')
     {{-- End shopping card  --}}
 
+    <div class="toastr-div">
+
+    </div>
     @yield('page_conent')
 
     <footer class="footer">
@@ -172,6 +175,44 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    {{-- jquery  --}}
+    <script>
+        //  Toaster object 
+        var toastr = {
+            count: 0,
+            toaster_append(msg, class_name) {
+                $('.toastr-div').append(`<div class="toastr ${class_name}">
+                                                    <span class="toaster-msg">${msg}</span>
+                                                </div>`);
+            },
+            success(msg) {
+                let class_name = 'toastr' + this.count;
+                console.log(this);
+                this.toaster_append(msg, class_name);
+
+                $('.' + class_name).fadeIn(1000);
+                setTimeout(() => {
+                    $('.' + class_name).fadeOut(1000);
+                }, 2500);
+                this.count++;
+            },
+            error(msg) {
+                let class_name = 'toastr' + this.count;
+                this.toaster_append(msg, class_name);
+
+                $('.' + class_name).css({
+                    backgroundColor: 'red'
+                });
+                $('.' + class_name).fadeIn(1000);
+                setTimeout(() => {
+                    $('.' + class_name).fadeOut(1000);
+                }, 2500);
+                this.count++;
+            }
+        }
+        // End Toaster object 
+    </script>
+    {{-- End jquery  --}}
     <script>
         //load  add to card product
         let count_mobile = document.querySelector('.count-mobile');
@@ -212,7 +253,8 @@
                     if (localStorage.getItem('product_storage')) {
                         let product_storage = JSON.parse(localStorage.getItem('product_storage'));
                         if (product_storage[product_id]) {
-                            alert('This product already added to your card');
+                            // alert(');
+                            toastr.success('This product already added to your card')
                         } else {
                             product_storage[product_id] = {
                                 'title': title,
@@ -221,13 +263,14 @@
                                 'dis_price': dis_price
                             };
                             localStorage.setItem('product_storage', JSON.stringify(
-                            product_storage));
+                                product_storage));
                             count.forEach(item => {
                                 item.innerText = Object.keys(product_storage).length +
                                     ' item(s)';
                             })
                             count_mobile.innerText = Object.keys(product_storage).length;
-                            alert('This product added to your card');
+                            // alert('This product added to your card');
+                            toastr.success('This product added to your card')
                         }
                     } else {
                         let product_storage = {};
@@ -252,14 +295,7 @@
     </script>
 
 
-    <script>
-        // $('nav.nav ul li.has-child').on('click',function(){
-        //     $('nav.nav ul li.has-child').each(function(){
-        //         $(this).removeClass('active');
-        //     });
-        //     $(this).addClass('active');
-        // })
-    </script>
+
 
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WXRDR8R" height="0" width="0"
@@ -267,7 +303,7 @@
     <!-- End Google Tag Manager (noscript) -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
-    //gtag() configuration
+    {{-- //gtag() configuration --}}
     <script async src="https://www.googletagmanager.com/gtag/js?id=MEASUREMENT_ID"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
