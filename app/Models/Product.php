@@ -45,4 +45,7 @@ class Product extends Model
         return $this->hasMany(Wishlist::class)->whereNotNull('cart_id');
     }
 
+    public function category(){
+        return $this->belongsTo(Category::class,'cat_id');
+    }
 }

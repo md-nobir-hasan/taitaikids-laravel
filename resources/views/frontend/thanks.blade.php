@@ -53,7 +53,7 @@
                                 <th></th>
                                 <th></th>
                                 <th>Total </th>
-                                <th>={{$total}}৳</th>
+                                <th>={{ $total }}৳</th>
                             </tr>
                         </thead>
                     </table>
@@ -348,19 +348,32 @@
     </script>
     {{-- End animation  --}}
 
-    <script>
-        gtag("event", "purchase", {
-            transaction_id: "{{ $order->order_number }}",
-            value: "{{ $order->total() }}",
-            currency: "BDT",
-            items: [{
-                item_id: "{{ $order->id }}",
-                item_name: "{{ $order->title }}",
+    {{-- Push data to google  --}}
+    <script type="text/javascript">
+        dataLayer.push({
+            ecommerce: null
+        }); // Clear the previous ecommerce object.
+        dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+                transaction_id: "{{ $order->order_number }}",
+                value: "{{ $order->total() }}",
+                shipping: "{{ $order->shipping->price }}",
                 currency: "BDT",
-                discount: "{{ $order->product->discount }}",
-                price: '{{ $order->total() }}',
-                quantity: '{{ $order->quantity }}',
-            }]
+                items: [
+                    @foreach ($orders as $order)
+                        {
+                            item_name: "{{ $order->title }}",
+                            item_id: "{{ $order->id }}",
+                            price: "{{ $order->product->price }}",
+                            discount: "{{ $order->product->discount }}",
+                            item_category: "{{ $order->product->category->title ?? '' }}",
+                            item_variant: "",
+                            quantity: "{{ $order->quantity }}"
+                        },
+                    @endforeach
+                ]
+            }
         });
     </script>
 @endpush

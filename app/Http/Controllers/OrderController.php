@@ -321,7 +321,7 @@ class OrderController extends Controller
     }
 
     public function thanks($order_no){
-        $n['orders'] = Order::where('order_number',$order_no)->get();
+        $n['orders'] = Order::with(['product','shipping','product.category'])->where('order_number',$order_no)->get();
         return view('frontend.thanks',$n);
     }
 
