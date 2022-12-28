@@ -70,9 +70,9 @@
                                         <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
                                         <div class="card-text mb-4">
                                             <span class="rounded rounded-pill p-2 ">৳<span
-                                                    class="dis-price{{ $product->id }}">{{ $product->price - ($product->discount ?? 0) }}</span>
+                                                    class="dis-price{{ $product->id }}">{{ en2bn($product->price - ($product->discount ?? 0)) }}</span>
                                                 <sub><s
-                                                        class="ml-3 price{{ $product->id }}">{{ $product->price }}৳</s></sub></span>
+                                                        class="ml-3 price{{ $product->id }}">{{ en2bn($product->price) }}৳</s></sub></span>
 
                                         </div>
                                         <a href="" class="btn btn-primary add-to-cart" id="{{ $product->id }}">
@@ -92,8 +92,6 @@
 
                 </div>
             </div>
-
-
         </div>
     </div>
 @endsection

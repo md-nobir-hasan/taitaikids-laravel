@@ -37,10 +37,10 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $order->product->title }}</td>
-                                    <td>{{ $order->product->price }}</td>
-                                    <td>{{ $order->quantity }}</td>
-                                    <td>{{ $order->shipping->price }}</td>
-                                    <td>{{ $order->total() }}৳</td>
+                                    <td>{{ en2bn($order->product->price) }}৳</td>
+                                    <td>{{ en2bn($order->quantity) }}</td>
+                                    <td>{{ en2bn($order->shipping->price) }}৳</td>
+                                    <td>{{ en2bn($order->total()) }}৳</td>
                                     @php
                                         $total += $order->total();
                                     @endphp
@@ -53,7 +53,7 @@
                                 <th></th>
                                 <th></th>
                                 <th>Total </th>
-                                <th>={{ $total }}৳</th>
+                                <th>={{ en2bn($total) }}৳</th>
                             </tr>
                         </thead>
                     </table>

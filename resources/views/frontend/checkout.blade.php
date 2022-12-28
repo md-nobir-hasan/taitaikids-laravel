@@ -36,7 +36,8 @@
         .header {
             font-weight: bold;
         }
-        .total-div span{
+
+        .total-div span {
             font-weight: bold;
             font-size: 17px;
         }
@@ -51,10 +52,26 @@
                 <div class="card text-center mt-4">
                     <div class="card-header">
                         <h1>Your all selected products</h1>
-                    </div>
-                    <div class="card-body" id="cart_show">
+                        <div class="table-responsive">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cart_show">
+                                    <tr>
+                                        <td colspan="4">There are no products</td>
+                                    </tr>
 
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
 
                 {{-- checkout form  --}}
@@ -84,7 +101,7 @@
                                         <option value="">Select shipping area</option>
                                         @foreach ($shippings as $shipping)
                                             <option value="{{ $shipping->id ?? old('shipping') }}">
-                                                {{ $shipping->type . '(' . $shipping->price . '৳)' }}</option>
+                                                {{ $shipping->type . '(' . en2bn($shipping->price) . '৳)' }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -119,114 +136,117 @@
         var d = document;
         let card_body = document.getElementById("cart_show");
         let cart_product = JSON.parse(localStorage.getItem('product_storage'));
-        let appends = `<div class="row mb-2 header">
-                            <div class="col-3">
-                                <span>Image</span>
-                            </div>
-                            <div class="col-3 text-start">
-                                <span>Price</span>
-                            </div>
-                            <div class="col-2 p-0 text-start">
-                                <span>Qty</span>
-                            </div>
-                            <div class="col-2">
-                                <span>Total</span>
-                            </div>
-                           
-                    </div>`;
+        let appends = ``;
 
         for (let item in cart_product) {
-            appends += `<div class="row mb-2 ">
-                        <div class="col-3">
-                           <img src="${cart_product[item].img}" alt="">
-                        </div>
-                        <div class="col-2 m-auto">
-                             <span class='price${item}'>${cart_product[item].dis_price}</span>৳
-                         </div>
-                        <div class="col-3 m-auto">
-                            <div class="input-group">
-                                <button class="btn btn-sm btn-outline-primary plus-btn" id='${item}' type="button">+</button>
-                                <input type="number" name='product[${item}][qty]' value="1" step="1">
-                                <button class="btn btn-sm btn-outline-danger minus-btn" id='${item}' type="button">-</button>
-                              </div>
-                        </div>
-                        <div class="col-2 m-auto">
-                           <span class="total-price${item} total-count">${cart_product[item].dis_price}</span>৳
-                         </div>
-                         <div class="col-2 m-auto">
-                            <span class='text-danger remove-product' id='${item}' role='button'><i class="fa-solid fa-trash"></i></span>
-                         </div>
-                    </div>`;
+            appends += ` <tr>
+                            <td><img src="${cart_product[item].img}" alt=""></td>
+                            <td> <span class='price'>${cart_product[item].dis_price}</span>৳</td>
+                            <td>
+                                <div class="input-group justify-content-center">
+                                    <button class="btn btn-sm btn-outline-primary plus-btn"
+                                        type="button">+</button>
+                                    <input type="text" name='product[${item}][qty]' value="১" class='qty'>
+                                    <button class="btn btn-sm btn-outline-danger minus-btn"
+                                        type="button">-</button>
+                                </div>
+                            </td>
+                            <td> <span
+                                    class="total-price">${cart_product[item].dis_price}</span>৳
+                            </td>
+                            <td><span class='text-danger remove-product' role='button'><i
+                                        class="fa-solid fa-trash"></i></span></td>
+                        </tr>`;
 
 
         }
-        appends += `<div class='row total-div'>
-                        <div class='col-md-12'>
-                            <hr>
-                        </div>
-                        <div class='col-7 text-end'>
-                            <span>Total Price:</span>
-                        </div>
-                        <div class='col-5 text-start' >
-                            <span id='toal'></span>
-                        </div>
-                        
-                    </div>`;
+
         card_body.innerHTML = appends;
-        let plus_btn = document.querySelectorAll('.plus-btn');
-        let minus_btn = document.querySelectorAll('.minus-btn');
+        // let plus_btn = document.querySelectorAll('.plus-btn');
+        // let minus_btn = document.querySelectorAll('.minus-btn');
         let total_count = document.querySelectorAll('.total-count');
         let total_element = document.getElementById('toal');
 
-        totalPriceCount();
-        increment(plus_btn);
-        decrement(minus_btn);
+        // totalPriceCount();
 
-        function increment(element) {
-            element.forEach(item => {
-                item.addEventListener('click', function(event) {
-                    if (Number(this.nextElementSibling.value) > 4) {
-                        alert("You can't select more than 5 product")
-                    } else {
-                        let id = this.getAttribute('id');
-                        let price = Number(d.querySelector(`.price${id}`).textContent);
-                        let total_priceE = d.querySelector(`.total-price${id}`);
-                        let qty = Number(this.nextElementSibling.value) + 1;
-                        this.nextElementSibling.value = qty;
-                        let total_price = price * qty;
-                        total_priceE.textContent = total_price;
-                        totalPriceCount();
-                    }
-                });
-            });
-        }
 
-        function decrement(element) {
-            element.forEach(item => {
-                item.addEventListener('click', function(event) {
-                    if (Number(this.previousElementSibling.value) < 2) {
-                        alert("You have to select at least one product")
-                    } else {
-                        let id = this.getAttribute('id');
-                        let price = Number(d.querySelector(`.price${id}`).textContent);
-                        let total_priceE = d.querySelector(`.total-price${id}`);
-                        let qty = Number(this.previousElementSibling.value) - 1;
-                        this.previousElementSibling.value = qty;
-                        let total_price = price * qty;
-                        total_priceE.textContent = total_price;
-                        totalPriceCount();
-                    }
-                });
-            })
-        }
-       
-        function totalPriceCount() {
-            let total = 0;
-            total_count.forEach((element, index) => {
-                total += Number(element.textContent);
-            });
-            total_element.textContent = total;
-        }
+        // increment(plus_btn);
+        // decrement(minus_btn);
+
+        //qty increment
+        $('.plus-btn').on('click', function() {
+            let index = $(this).index('.plus-btn');
+            let qty = Number(bn2en($('.qty').eq(index).val())) + 1;
+            if (qty > 5) {
+                toastr.error("You can't select more than 5 product");
+            } else {
+                let price = Number(bn2en($('.price').eq(index).text()));
+                let total_price = qty * price;
+                $('.qty').eq(index).val(en2bn(String(qty)));
+                $('.total-price').eq(index).text(en2bn(String(total_price)));
+            }
+        })
+
+        //qty decrement
+        $('.minus-btn').on('click', function() {
+            let index = $(this).index('.minus-btn');
+            let qty = Number(bn2en($('.qty').eq(index).val())) - 1;
+            if (qty < 1) {
+                toastr.error("You have to select at least one product");
+            } else {
+                let price = Number(bn2en($('.price').eq(index).text()));
+                let total_price = qty * price;
+                $('.qty').eq(index).val(en2bn(String(qty)));
+                $('.total-price').eq(index).text(en2bn(String(total_price)));
+            }
+        })
+
+        // function increment(element) {
+        //     element.forEach(item => {
+        //         item.addEventListener('click', function(event) {
+        //             if (Number(this.nextElementSibling.value) > 4) {
+        //                 alert("You can't select more than 5 product")
+        //             } else {
+        //                 let id = this.getAttribute('id');
+        //                 let price = Number(d.querySelector(`.price${id}`).textContent);
+        //                 let total_priceE = d.querySelector(`.total-price${id}`);
+        //                 let qty = Number(this.nextElementSibling.value) + 1;
+        //                 this.nextElementSibling.value = qty;
+        //                 let total_price = price * qty;
+        //                 total_priceE.textContent = total_price;
+        //                 totalPriceCount();
+        //             }
+        //         });
+        //     });
+        // }
+
+
+        // function decrement(element) {
+        //     element.forEach(item => {
+        //         item.addEventListener('click', function(event) {
+        //             if (Number(this.previousElementSibling.value) < 2) {
+        //                 alert("You have to select at least one product")
+        //             } else {
+        //                 let id = this.getAttribute('id');
+        //                 let price = Number(d.querySelector(`.price${id}`).textContent);
+        //                 let total_priceE = d.querySelector(`.total-price${id}`);
+        //                 let qty = Number(this.previousElementSibling.value) - 1;
+        //                 this.previousElementSibling.value = qty;
+        //                 let total_price = price * qty;
+        //                 total_priceE.textContent = total_price;
+        //                 totalPriceCount();
+        //             }
+        //         });
+        //     })
+        // }
+
+        // function totalPriceCount() {
+        //     let total = 0;
+        //     total_count.forEach((element, index) => {
+        //         total += Number(element.textContent);
+        //     });
+        //     total_element.textContent = total;
+        // }
 
         //remove product from cart 
         let remove = d.querySelectorAll('.remove-product');
@@ -244,6 +264,5 @@
 
             });
         });
-        
     </script>
 @endpush

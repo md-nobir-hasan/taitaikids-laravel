@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Product;
-use App\Models\CompanyContact;
 use App\Models\OrderStatus;
-use App\User;
 use PDF;
-use Notification;
-use Helper;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use App\Notifications\StatusNotification;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Helpers\Converter;
 class OrderController extends Controller
 {
 
@@ -68,6 +62,7 @@ class OrderController extends Controller
         ];
         Validator::make($request->all(),$rule,$msg,$attributes);
         $order_number = 'ORD-'.strtoupper(Str::random(10));
+    
         foreach($request->product as $key => $qty){
             $insert=new Order();
             $insert->product_id = $key;
@@ -76,7 +71,7 @@ class OrderController extends Controller
             $insert->name = $request->name;
             $insert->address = $request->address;
             $insert->phone = $request->phone;
-            $insert->quantity = $qty['qty'];
+            $insert->quantity = Converter::bn2en($qty['qty']);
             $insert->payment_method = $request->payment_method;
             $insert->payment_number = $request->payment_number;
             $insert->order_number = $order_number;
@@ -98,7 +93,7 @@ class OrderController extends Controller
     
             $product_update = Product::find($key);
            if($product_update != null){
-                $product_update->stock = $product_update->stock - $qty['qty'];
+                $product_update->stock = $product_update->stock - Converter::bn2en($qty['qty']);
                 $product_update->save();
            }
         }

@@ -3,7 +3,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltr" lang="bn">
 
 <head>
     <meta charset="UTF-8" />
@@ -177,6 +177,9 @@
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     {{-- jquery  --}}
     <script>
+        // Language conversation
+        var bn2en = n => n.replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d));
+        var en2bn = n => n.replace(/\d/g, d => "০১২৩৪৫৬৭৮৯" [d]);
         //  Toaster object 
         var toastr = {
             count: 0,
