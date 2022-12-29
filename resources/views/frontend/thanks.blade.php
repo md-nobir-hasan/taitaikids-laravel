@@ -37,7 +37,7 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $order->product->title }}</td>
-                                    <td>{{ en2bn($order->product->price) }}৳</td>
+                                    <td>{{ en2bn($order->product->price - $order->product->discount) }}৳</td>
                                     <td>{{ en2bn($order->quantity) }}</td>
                                     <td>{{ en2bn($order->shipping->price) }}৳</td>
                                     <td>{{ en2bn($order->total()) }}৳</td>

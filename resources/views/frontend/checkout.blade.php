@@ -68,6 +68,15 @@
                                     </tr>
 
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Total =</th>
+                                        <th><span class="all-total"></span>৳</th>
+                                    </tr>
+                                </tfoot>
+
                             </table>
                         </div>
                     </div>
@@ -139,6 +148,7 @@
         let appends = ``;
 
         for (let item in cart_product) {
+            console.log(cart_product[item])
             appends += ` <tr>
                             <td><img src="${cart_product[item].img}" alt=""></td>
                             <td> <span class='price'>${cart_product[item].dis_price}</span>৳</td>
@@ -154,7 +164,7 @@
                             <td> <span
                                     class="total-price">${cart_product[item].dis_price}</span>৳
                             </td>
-                            <td><span class='text-danger remove-product' role='button'><i
+                            <td><span class='text-danger remove-product' role='button' id="${item}"><i
                                         class="fa-solid fa-trash"></i></span></td>
                         </tr>`;
 
@@ -162,16 +172,10 @@
         }
 
         card_body.innerHTML = appends;
-        // let plus_btn = document.querySelectorAll('.plus-btn');
-        // let minus_btn = document.querySelectorAll('.minus-btn');
         let total_count = document.querySelectorAll('.total-count');
         let total_element = document.getElementById('toal');
 
-        // totalPriceCount();
-
-
-        // increment(plus_btn);
-        // decrement(minus_btn);
+        totalPriceCount();
 
         //qty increment
         $('.plus-btn').on('click', function() {
@@ -184,6 +188,7 @@
                 let total_price = qty * price;
                 $('.qty').eq(index).val(en2bn(String(qty)));
                 $('.total-price').eq(index).text(en2bn(String(total_price)));
+                totalPriceCount();
             }
         })
 
@@ -198,6 +203,7 @@
                 let total_price = qty * price;
                 $('.qty').eq(index).val(en2bn(String(qty)));
                 $('.total-price').eq(index).text(en2bn(String(total_price)));
+                totalPriceCount();
             }
         })
 
@@ -240,13 +246,13 @@
         //     })
         // }
 
-        // function totalPriceCount() {
-        //     let total = 0;
-        //     total_count.forEach((element, index) => {
-        //         total += Number(element.textContent);
-        //     });
-        //     total_element.textContent = total;
-        // }
+        function totalPriceCount() {
+            let total = 0;
+            $('.total-price').each(function() {
+                total += Number(bn2en($(this).text()));
+            })
+            $('.all-total').text(en2bn(String(total)));
+        }
 
         //remove product from cart 
         let remove = d.querySelectorAll('.remove-product');

@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=Order::with(['shipping'])->orderBy('id','DESC')->where('status','active')->get()->groupBy('order_number');
+        $orders=Order::with(['shipping','product'])->orderBy('id','DESC')->where('status','active')->get()->groupBy('order_number');
         return view('backend.pages.order.index')->with('orders',$orders);
     }
 
@@ -108,7 +108,7 @@ class OrderController extends Controller
     }
 
     public function view($order_number){
-        $n['orders'] = Order::where('order_number',$order_number)->get();
+        $n['orders'] = Order::with(['shipping','product'])->where('order_number',$order_number)->get();
         return view('backend.pages.order.order-view',$n);
     }
     /**
