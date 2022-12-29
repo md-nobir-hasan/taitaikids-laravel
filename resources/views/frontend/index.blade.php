@@ -59,29 +59,32 @@
                 </div>
                 <div class="product-listing bg-white">
 
-                    <div class="row">
+                    <div class="row row-cols-2 row-cols-md-4 g-4">
                         @forelse($products as $product)
-                            <div class="col-6 col-md-3 p-3">
-                                <div class="card-group">
-                                    <div class="card text-center h-100">
-                                        <img class="card-img-top product-image img{{ $product->id }}"
-                                            src='{{ asset("$product->photo") }}' alt="{{ $product->title }}"
-                                            title="{{ $product->title }}">
-                                        <div class="card-body">
-                                            <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
-                                            <div class="card-text mb-4">
-                                                <span class="rounded rounded-pill p-2 ">৳<span
-                                                        class="dis-price{{ $product->id }}">{{ en2bn($product->price - ($product->discount ?? 0)) }}</span>
-                                                    <sub><s
-                                                            class="ml-3 price{{ $product->id }}">{{ en2bn($product->price) }}৳</s></sub></span>
+                            <div class="col">
+                                {{-- <div class="card-group"> --}}
+                                <div class="card text-center h-100">
+                                    <img class="card-img-top product-image img{{ $product->id }}"
+                                        src='{{ asset("$product->photo") }}' alt="{{ $product->title }}"
+                                        title="{{ $product->title }}">
+                                    <div class="card-body">
+                                        <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
+                                        <div class="card-text mb-4">
+                                            <span class="rounded rounded-pill p-2 ">৳<span
+                                                    class="dis-price{{ $product->id }}">{{ en2bn($product->price - ($product->discount ?? 0)) }}</span>
+                                                <sub><s
+                                                        class="ml-3 price{{ $product->id }}">{{ en2bn($product->price) }}৳</s></sub></span>
 
-                                            </div>
-                                            <a href="" class="btn btn-primary add-to-cart" id="{{ $product->id }}">
-                                                <i class="fa fa-cart-plus"></i>
-                                                <span>Add to Cart</span></a>
                                         </div>
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="" class="btn btn-primary add-to-cart" id="{{ $product->id }}">
+                                            <i class="fa fa-cart-plus"></i>
+                                            <span>Add to Cart</span></a>
                                     </div>
                                 </div>
+                                {{-- </div> --}}
                             </div>
                         @empty
                             @if (isset($category))
