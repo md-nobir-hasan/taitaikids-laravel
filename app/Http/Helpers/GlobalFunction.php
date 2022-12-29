@@ -1,8 +1,7 @@
 <?php 
-// namespace App\Http\globalFunction;
 
 // Number converter from bangla to english and en2bn 
-class Converter 
+class Converter2 
 {
     public static $bn = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০"];
     public static $en = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
@@ -19,7 +18,7 @@ class Converter
 }
 
 function en2bn($bn_number){
-   return Converter::en2bn($bn_number);
+   return Converter2::en2bn($bn_number);
 }
 // uses 
 // $a = '১২'; //(12)

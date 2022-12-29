@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once base_path().'/App/Http/Helpers/GlobalFunction.php';
+        require_once base_path().'/app/Http/Helpers/GlobalFunction.php';
     }
 
     /**

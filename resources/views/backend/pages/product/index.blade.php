@@ -33,13 +33,12 @@
                                     <tr>
                                         <th>S.N.</th>
                                         <th>Title</th>
-                                        {{-- <th>Category</th> --}}
+                                        <th>Category</th>
                                         <th>Price</th>
                                         <th>Discount</th>
-                                        <th>Condition</th>
-                                        <th>Product</th>
                                         <th>Stock</th>
                                         <th>Photo</th>
+                                        <th>Created at</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -49,15 +48,9 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $value->title }}</td>
-                                            {{-- <td>{{ $value->cat_info->title }}</td> --}}
+                                            <td>{{ $value->cat_info->title }}</td>
                                             <td>TK. {{ $value->price }} /-</td>
                                             <td> {{ $value->discount }}TK</td>
-                                            <td>{{ $value->condition }}</td>
-                                            <td>
-                                                @foreach ($products as $values)
-                                                    {{ $values->title }}
-                                                @endforeach
-                                            </td>
                                             <td>
                                                 @if ($value->stock > 0)
                                                     <span class="badge badge-primary">{{ $value->stock }}</span>
@@ -66,10 +59,11 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <img src="{{ asset($value->photo) }}"
-                                                    style="height: 100px; width: 150px;" class="img-fluid zoom"
-                                                    style="max-width:80px" alt="{{ $value->photo }}">
+                                                <img src="{{ asset($value->photo) }}" style="height: 100px; width: 150px;"
+                                                    class="img-fluid zoom" style="max-width:80px"
+                                                    alt="{{ $value->photo }}">
                                             </td>
+                                            <td>{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                             <td>
                                                 @if ($value->status == 'active')
                                                     <span class="badge badge-success">{{ $value->status }}</span>

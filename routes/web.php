@@ -29,6 +29,7 @@ use App\Http\Controllers\OrderStatusController;
  Route::get('product/fetch/{id}',[FrontendController::class,'productFetch'])->name('product.fetch');
  Route::get('order/thank-you-page/{order}',[OrderController::class,'thanks'])->name('order.thanks');
  Route::get('order/checkout',[OrderController::class,'checkout'])->name('checkout');
+
  //end frontend route
 
 Route::get('/dashboard', function () {
@@ -98,6 +99,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/delete/{id}',[OrderController::class,'delete'])->name('delete');
         Route::get('/restore/{id}',[OrderController::class,'restore'])->name('restore');
         Route::get('/destroy/{id}',[OrderController::class,'destroy'])->name('destroy');
+         Route::get('view/{order_number}',[OrderController::class,'view'])->name('view');
 
     });
 

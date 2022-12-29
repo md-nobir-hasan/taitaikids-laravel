@@ -66,5 +66,22 @@ class Order extends Model
             }
       
     }
+     public function toalQty(){
+        $orders = Order::where('order_number',$this->order_number)->get();
+        $total_qty  = 0;
+        foreach($orders as $order){
+            $total_qty += $order->quantity;
+        }
+      return $total_qty;
+    }
+
+    public function CusWiseTotal(){
+         $orders = Order::where('order_number',$this->order_number)->get();
+        $total_price  = 0;
+        foreach($orders as $order){
+            $total_price += $order->product->mainPrice() * $order->quantity + $order->shipping->price;
+        }
+      return $total_price;
+    }
 
 }

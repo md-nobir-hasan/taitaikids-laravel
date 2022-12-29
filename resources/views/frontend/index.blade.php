@@ -62,7 +62,8 @@
                     <div class="row">
                         @forelse($products as $product)
                             <div class="col-6 col-md-3 p-3">
-                                <div class="card text-center h-100">
+                                <div class="card-groups">
+                                    <div class="card text-center h-100">
                                     <img class="card-img-top product-image img{{ $product->id }}"
                                         src='{{ asset("$product->photo") }}' alt="{{ $product->title }}"
                                         title="{{ $product->title }}">
@@ -79,6 +80,7 @@
                                             <i class="fa fa-cart-plus"></i>
                                             <span>Add to Cart</span></a>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         @empty

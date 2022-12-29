@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <label for="summary" class="col-form-label">Why this product <span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="summary" name="summary">{{ old('summary') }}</textarea>
+                                        <textarea class="form-control" id="summary" name="summary" required>{{ old('summary') ?? 'abc' }}</textarea>
                                         @error('summary')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -77,8 +77,8 @@
                                     <div class="form-group">
                                         <label for="discouns" class="col-form-label">Discount(amount)</label>
                                         <input id="discounts" type="number" name="discount" min="0"
-                                            placeholder="Enter discount" value="{{ old('discount') }}"
-                                            class="form-control" required>
+                                            placeholder="Enter discount" value="{{ old('discount') }}" class="form-control"
+                                            required>
                                         @error('discount')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -108,7 +108,8 @@
                                     <div class="form-group">
                                         <label for="stock">Quantity <span class="text-danger">*</span></label>
                                         <input id="quantity" type="number" name="stock" min="0"
-                                            placeholder="Enter quantity" value="{{ old('stock') }}" class="form-control" required>
+                                            placeholder="Enter quantity" value="{{ old('stock') }}" class="form-control"
+                                            required>
                                         @error('stock')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

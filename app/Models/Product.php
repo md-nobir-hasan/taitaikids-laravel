@@ -48,4 +48,7 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class,'cat_id');
     }
+    public function mainPrice(){
+        return $this->price - $this->discount;
+    }
 }

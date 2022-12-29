@@ -44,36 +44,46 @@
                                         <th>phone</th>
                                         <th>Address</th>
                                         <th>Proudct Title</th>
-                                        <th>Proudct Price</th>
+                                        {{-- <th>Proudct Price</th> --}}
                                         <th>Quantity</th>
-                                        {{-- <th>Shipping</th> --}}
-                                        {{-- <th>Total Amount</th> --}}
+                                        <th>Shipping</th>
+                                        <th>Total Amount</th>
                                         {{-- <th>Payment Method</th> --}}
-                                        <th>Ordered Time</th>
+                                        <th>Ordered Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($orders as $key => $order)
-                                   
+                                    @php
+                                        $count = 0;
+                                    @endphp
+                                    @forelse($orders as $key => $single_collection)
+                                        @php
+                                            $order = $single_collection->first();
+                                            $count++;
+                                        @endphp
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $count }}</td>
                                             <td>{{ $order->order_number }}</td>
                                             <td>{{ $order->name }}</td>
                                             <td>{{ $order->phone }}</td>
                                             <td>{{ $order->address }}</td>
-                                            <td>{{ $order->product->title }}</td>
-                                            <td>{{ $order->product->price }}</td>
-                                            <td>{{ $order->quantity }}</td>
+                                            <td>
 
-                                            {{-- <td>{{ $order->shipping->type  .'('.$order->shipping->price.')৳' }}</td> --}}
-                                            {{-- <td>{{ ($order->quantity * $order->product->price)+ $order->shipping->price}}</td>
-                                            <td>{{ $order->quantity->payment_method ?? 'Cash on Delivery'}}
-                                            </td> --}}
+                                                @foreach ($single_collection as $i => $n)
+                                                    {{ $i != 0 ? '|' : '' }} {{ $n->product->title }}
+                                                @endforeach
+                                            </td>
+                                            <td>{{ $order->toalQty() }}</td>
+
+                                            <td>{{ $order->shipping->type . '(' . $order->shipping->price . ')৳' }}</td>
+                                            <td>{{ $order->total() }}</td>
+                                            {{-- <td>{{ $order->quantity->payment_method ?? 'Cash on Delivery' }} --}}
+                                            </td>
                                             {{-- <td>{{ $order->payment_number }}</td> --}}
                                             {{-- <td>{{ $order->pamyment_method}}</td> --}}
-                                            <td>{{ $order->created_at->diffForHumans() }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
                                             <td>
                                                 <a class="btn">
                                                     @if ($order->order_status == 'new')
@@ -100,6 +110,10 @@
                                                     {{-- <a href="{{ route('order.edit', $order->id) }}"
                                                         class="btn btn-dark btnEdit" title="Edit"><i
                                                             class="fas fa-edit"></i></a> --}}
+
+                                                    <a href="{{ route('order.view', $order->order_number) }}"
+                                                        class="btn btn-danger view-btn" title="View Order Details"><i
+                                                            class="fa-solid fa-eye"></i></a>
                                                     <a href="{{ route('order.delete', $order->id) }}"
                                                         class="btn btn-danger btnDelete" title="Move to trash"><i
                                                             class="fas fa-trash"></i></a>
