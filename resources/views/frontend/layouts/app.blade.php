@@ -160,7 +160,7 @@
                         <i class="fa fa-shopping-cart text-light"></i>
                     </div>
                     <span class="text text-light">Cart</span>
-                    <span class="value count-mobile">0</span>
+                    <span class="value count-mobile bg-warning">0</span>
                 </a>
             </div>
         </div>

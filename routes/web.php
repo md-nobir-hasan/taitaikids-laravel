@@ -113,7 +113,6 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/delete/{id}',[OrderStatusController::class,'destroy'])->name('destroy');
         Route::get('/ajax',[OrderStatusController::class,'ajax'])->name('ajax');
         Route::get('/order-status-assign',[OrderStatusController::class,'OrderStatusAssign'])->name('order-status-assign');
-
     });
 });
 

@@ -29,7 +29,7 @@
                             <h4>View Order</h4>
                         </span>
                         <span class="float-right">
-                            <a href="{{ route('order.trash') }}" class="btn btn-danger">Trash</a>
+                            <a href="{{ route('order.trash') }}" class="btn btn-danger">View Trash</a>
                         </span>
                     </div>
                     <div class="card-body">
@@ -44,11 +44,9 @@
                                         <th>phone</th>
                                         <th>Address</th>
                                         <th>Proudct Title</th>
-                                        {{-- <th>Proudct Price</th> --}}
                                         <th>Quantity</th>
                                         <th>Shipping</th>
                                         <th>Total Amount</th>
-                                        {{-- <th>Payment Method</th> --}}
                                         <th>Ordered Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -64,56 +62,58 @@
                                             $count++;
                                         @endphp
                                         <tr>
-                                            <td>{{ $count }}</td>
-                                            <td>{{ $order->order_number }}</td>
-                                            <td>{{ $order->name }}</td>
-                                            <td>{{ $order->phone }}</td>
-                                            <td>{{ $order->address }}</td>
-                                            <td>
+                                            <td class="align-middle">{{ $count }}</td>
+                                            <td class="align-middle">{{ $order->order_number }}</td>
+                                            <td class="align-middle">{{ $order->name }}</td>
+                                            <td class="align-middle">{{ $order->phone }}</td>
+                                            <td class="align-middle">{{ $order->address }}</td>
+                                            <td class="align-middle">
 
                                                 @foreach ($single_collection as $i => $n)
                                                     {{ $i != 0 ? '|' : '' }} {{ $n->product->title }}
                                                 @endforeach
                                             </td>
-                                            <td>{{ $order->toalQty() }}</td>
+                                            <td class="align-middle">{{ $order->toalQty() }}</td>
 
-                                            <td>{{ $order->shipping->type . '(' . $order->shipping->price . ')৳' }}</td>
-                                            <td>{{ $order->total() }}</td>
+                                            <td class="align-middle">
+                                                {{ $order->shipping->type . '(' . $order->shipping->price . ')৳' }}</td>
+                                            <td class="align-middle">{{ $order->total() }}</td>
                                             {{-- <td>{{ $order->quantity->payment_method ?? 'Cash on Delivery' }} --}}
                                             </td>
                                             {{-- <td>{{ $order->payment_number }}</td> --}}
                                             {{-- <td>{{ $order->pamyment_method}}</td> --}}
-                                            <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
-                                            <td>
+                                            <td class="align-middle">{{ date('d-m-Y', strtotime($order->created_at)) }}
+                                            </td>
+                                            <td class="align-middle">
                                                 <a class="btn">
                                                     @if ($order->order_status == 'new')
                                                         <span class="badge badge-primary order_status"
-                                                            onclick="orderStatus({{ $order->id }},{{ $key }})"
-                                                            id="order_status{{ $key }}">{{ $order->order_status }}</span>
+                                                            onclick="orderStatus({{ $order->id }},{{ $count }})"
+                                                            id="order_status{{ $count }}">{{ $order->order_status }}</span>
                                                     @elseif($order->order_status == 'process')
                                                         <span class="badge badge-warning order_status"
-                                                            onclick="orderStatus({{ $order->id }},{{ $key }})"
-                                                            id="order_status{{ $key }}">{{ $order->order_status }}</span>
+                                                            onclick="orderStatus({{ $order->id }},{{ $count }})"
+                                                            id="order_status{{ $count }}">{{ $order->order_status }}</span>
                                                     @elseif($order->order_status == 'delivered')
                                                         <span class="badge badge-success order_status"
-                                                            onclick="orderStatus({{ $order->id }},{{ $key }})"
-                                                            id="order_status{{ $key }}">{{ $order->order_status }}</span>
+                                                            onclick="orderStatus({{ $order->id }},{{ $count }})"
+                                                            id="order_status{{ $count }}">{{ $order->order_status }}</span>
                                                     @else
                                                         <span class="badge badge-danger order_status"
-                                                            onclick="orderStatus({{ $order->id }},{{ $key }})"
-                                                            id="order_status{{ $key }}">{{ $order->order_status }}</span>
+                                                            onclick="orderStatus({{ $order->id }},{{ $count }})"
+                                                            id="order_status{{ $count }}">{{ $order->order_status }}</span>
                                                     @endif
                                                 </a>
                                             </td>
-                                            <td class="text-middle py-0 align-middle">
+                                            <td class="align-middle">
                                                 <div class="btn-group">
                                                     {{-- <a href="{{ route('order.edit', $order->id) }}"
                                                         class="btn btn-dark btnEdit" title="Edit"><i
                                                             class="fas fa-edit"></i></a> --}}
 
                                                     <a href="{{ route('order.view', $order->order_number) }}"
-                                                        class="btn btn-danger view-btn" title="View Order Details"><i
-                                                            class="fa-solid fa-eye"></i></a>
+                                                        class="btn btn-info view-btn" title="View Order Details"><i
+                                                            class="fas fa-eye"></i></a>
                                                     <a href="{{ route('order.delete', $order->id) }}"
                                                         class="btn btn-danger btnDelete" title="Move to trash"><i
                                                             class="fas fa-trash"></i></a>

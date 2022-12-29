@@ -92,7 +92,7 @@ header {
 }
 
 .header-top-wrapper {
-    background: #4fb3bf;
+    background: #ad00be;
     padding: 14px 0;
     margin-left: 280px;
 }
@@ -173,7 +173,7 @@ textarea {
     width: 280px;
     top: 0;
     left: 0;
-    background: #005662;
+    background: #006a4a;
     height: 100%;
     overflow-y: auto;
     z-index: 999;
@@ -342,7 +342,7 @@ textarea {
     ) !important;
 }
 .footer-content {
-    background: #025563;
+    background: #8b0099;
     padding-top: 30px;
 }
 .flex-wrap {
@@ -362,7 +362,7 @@ textarea {
     font-size: 14px;
 }
 .footer-content .footer-widget ul li a {
-    color: #ddd;
+    color: yellow;
 }
 .footer-contact-info li {
     font-size: 18px;
@@ -373,7 +373,7 @@ textarea {
 }
 .footer-content .title {
     font-size: 18px;
-    color: #fff;
+    color: yellow;
     line-height: initial;
 }
 .copy-right {
@@ -818,7 +818,7 @@ a .nav-awsome-icon {
     font-size: 24px;
 }
 .carousel-inner img {
-    max-height: 450px;
+    max-height: 318px;
 }
 
 .card-text span {
@@ -829,7 +829,8 @@ a .nav-awsome-icon {
 }
 
 nav.nav ul li.has-child a.active {
-    background-color: black;
+    background-color: #e8ba40;
+    color: #0f1de8;
 }
 
 .thank-icon {
