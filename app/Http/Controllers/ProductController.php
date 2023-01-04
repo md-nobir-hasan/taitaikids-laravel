@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $products=Product::getAllProduct();
-   
+
         return view('backend.pages.product.index')->with('products',$products);
     }
 
@@ -61,14 +61,31 @@ class ProductController extends Controller
         else{
             $data['size']='';
         }
+
+        //Product gallery code
+        $image = array();
+
+        if ($files = $request->file('product_gallery')){
+            foreach ($files as $file){
+                $image_name = md5(rand(1000, 10000));
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_full_name = 'new'.$image_name.'.'.$ext;
+                $file->move(public_path('product'), $image_full_name);
+                $image[] = 'product/'.$image_full_name;
+            }
+        }
+
+        $data['product_gallery'] = implode('|', $image);
+
         if($request->file('photo')){
             $file= $request->file('photo');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file-> move(public_path('product'), $filename);
             $data['photo']= 'product/'.$filename;
         }
-      
+
         $status=Product::create($data);
+
         if($status){
             request()->session()->flash('success','Product Successfully added');
         }
@@ -149,6 +166,34 @@ class ProductController extends Controller
             $file-> move(public_path('product'), $filename);
             $data['photo']= 'product/'.$filename;
         }
+
+        //Product gallery update code
+        $image = array();
+
+        if ($files = $request->file('product_gallery')){
+            foreach ($files as $file){
+                $image_name = md5(rand(1000, 10000));
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_full_name = $image_name.'.'.$ext;
+
+                /*$old_images = explode('|', $product->product_gallery);
+                foreach ($old_images as $key => $old_image){
+                    if (file_exists(public_path('product').$old_image)){
+                        unlink(public_path('product').$old_image);
+                    }
+                }*/
+
+                $file->move(public_path('product'), $image_full_name);
+                $image[] = 'product/'.$image_full_name;
+
+            }
+            $data['product_gallery'] = implode('|', $image);
+        }else{
+            $data['product_gallery'] = $product->product_gallery;
+        }
+
+        //Product gallery update code end
+
         $status=$product->fill($data)->save();
         if($status){
             request()->session()->flash('success','Product Successfully updated');
@@ -177,5 +222,19 @@ class ProductController extends Controller
             request()->session()->flash('error','Error while deleting product');
         }
         return redirect()->route('product.index');
+    }
+
+    // Product details code
+    public function product_details($id){
+        $data = Product::find($id);
+
+        return view('frontend.product_details', compact('data'));
+    }
+
+    // Show gallery image code
+    public function show_gallery($id){
+        $data = Product::find($id);
+
+        return view('backend.pages.product.show_gallery', compact('data'));
     }
 }

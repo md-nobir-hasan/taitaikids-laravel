@@ -38,6 +38,7 @@
                                         <th>Discount</th>
                                         <th>Stock</th>
                                         <th>Photo</th>
+                                        <th>Product gallery</th>
                                         <th>Created at</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -63,6 +64,11 @@
                                                     class="img-fluid zoom" style="max-width:80px"
                                                     alt="{{ $value->photo }}">
                                             </td>
+
+                                            <td>
+                                                <a href="{{ url('product/show_gallery', $value->id) }}" class="btn btn-sm btn-primary">Show_Gallery</a>
+                                            </td>
+
                                             <td>{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                             <td>
                                                 @if ($value->status == 'active')

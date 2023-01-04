@@ -123,8 +123,8 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
 
+                                    <div class="form-group">
                                         <label for="inputPhoto" class="col-form-label">Photo <span
                                                 class="text-danger">*</span></label>
                                         <input id="photo" type="file" name="photo"
@@ -133,6 +133,18 @@
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                         @error('photo')
                                             <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputPhoto" class="col-form-label">Product gallery<span
+                                                class="text-danger">*</span></label>
+                                        <input id="photo" type="file" name="product_gallery[]" multiple
+                                               placeholder="Enter Product gallery" value="{{ $product->product_gallery }}"
+                                               class="form-control">
+                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                                        @error('product_gallery')
+                                        <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 

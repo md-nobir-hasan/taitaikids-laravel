@@ -64,20 +64,21 @@
                             <div class="col">
                                 {{-- <div class="card-group"> --}}
                                 <div class="card text-center h-100">
-                                    <img class="card-img-top product-image img{{ $product->id }}"
-                                        src='{{ asset("$product->photo") }}' alt="{{ $product->title }}"
-                                        title="{{ $product->title }}">
-                                    <div class="card-body">
-                                        <h2 class="card-title title{{ $product->id }}">{{ $product->title }}</h2>
-                                        <div class="card-text mb-4">
-                                            <span class="rounded rounded-pill p-2 ">৳<span
-                                                    class="dis-price{{ $product->id }}">{{ en2bn($product->price - ($product->discount ?? 0)) }}</span>
-                                                <sub><s
-                                                        class="ml-3 price{{ $product->id }}">{{ en2bn($product->price) }}৳</s></sub></span>
-
+                                    <a href="{{ route('product_details', [$product->id]) }}">
+                                        <img class="card-img-top product-image img{{ $product->id }}"
+                                             src='{{ asset("$product->photo") }}' alt="{{ $product->title }}"
+                                             title="{{ $product->title }}">
+                                        <di class="card-title">
+                                            <h2 class="card-title title text-dark title{{ $product->id }}">{{ $product->title }}</h2>
+                                        </di>
+                                        <div class="card-body">
+                                            <div class="card-text mb-4">
+                                            <span class="rounded rounded-pill p-2 ">৳<span class="dis-price{{ $product->id }}">{{ en2bn($product->price - ($product->discount ?? 0)) }}</span>
+                                                <sub><s class="ml-3 price text-dark price{{ $product->id }}">{{ en2bn($product->price) }}৳</s></sub>
+                                            </span>
+                                            </div>
                                         </div>
-
-                                    </div>
+                                    </a>
                                     <div class="card-footer">
                                         <a href="" class="btn btn-primary add-to-cart" id="{{ $product->id }}">
                                             <i class="fa fa-cart-plus"></i>
@@ -101,34 +102,5 @@
     </div>
 @endsection
 @push('custom-js')
-    <script>
-        gtag('event', 'screen_view', {
-            'app_name': 'myAppName',
-            'screen_name': 'Home'
-        });
 
-        $('.add-to-cart').on('click', function(e) {
-            e.preventDefault;
-            let index = Number($(this).index('.add-to-cart'));
-            var product_name = $('.card-title');
-            var id = Number($(this).prop('id'));
-            var valu = Number($('.dis-price' + id).text());
-            var price = Number($('.price' + id).text());
-
-            gtag("event", "add_to_cart", {
-                currency: "BDT",
-                value: valu,
-                items: [{
-                    item_id: id,
-                    item_name: product_name,
-                    currency: "BDT",
-                    discount: 2.22,
-                    index: index,
-                    price: price,
-                    quantity: 1
-                }]
-            });
-
-        });
-    </script>
 @endpush

@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <label for="summary" class="col-form-label">Why this product <span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="summary" name="summary" required>{{ old('summary') ?? 'abc' }}</textarea>
+                                        <textarea class="form-control" id="summary" name="summary" required>{{ old('summary') }}</textarea>
                                         @error('summary')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -114,13 +114,13 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
 
+                                    <div class="form-group">
                                         <label for="inputPhoto" class="col-form-label">Photo <span
                                                 class="text-danger">*</span></label>
                                         <input id="photo" type="file" name="photo"
-                                            placeholder="Enter Product Photo" value="{{ old('photo') }}"
-                                            class="form-control" required>
+                                            placeholder="Enter Product Photo" required value="{{ old('photo') }}"
+                                            class="form-control">
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                         @error('photo')
                                             <span class="text-danger">{{ $message }}</span>
@@ -128,10 +128,22 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="inputPhoto" class="col-form-label">Product gallery<span
+                                                class="text-danger">*</span></label>
+                                        <input id="photo" type="file" name="product_gallery[]" multiple
+                                               placeholder="Enter Product gallery" value="{{ old('product_gallery') }}"
+                                               class="form-control" required>
+                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                                        @error('product_gallery')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="status" class="col-form-label">Status <span
                                                 class="text-danger">*</span></label>
                                         <select name="status" class="form-control" required>
-                                            <option value="active">Active</option>
+                                            <option selected value="active">Active</option>
                                             <option value="inactive">Inactive</option>
                                         </select>
                                         @error('status')

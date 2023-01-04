@@ -97,7 +97,7 @@ class FrontendController extends Controller
     {
         //
     }
-    
+
    public function productFetch($id = null){
         if($id){
             $n['company_info'] = CompanyInfo::first();
@@ -116,5 +116,4 @@ class FrontendController extends Controller
         }
     }
 
-    
 }

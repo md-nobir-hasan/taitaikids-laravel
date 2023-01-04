@@ -22,13 +22,15 @@ use App\Http\Controllers\OrderStatusController;
 |
 */
 
- //frontend route
- Route::get('/', [FrontendController::class,'index'])->name('home');
- Route::get('/category-product/{id}', [FrontendController::class,'categoryWiseShow'])->name('category');
- Route::post('order/store',[OrderController::class,'store'])->name('order.store');
- Route::get('product/fetch/{id}',[FrontendController::class,'productFetch'])->name('product.fetch');
- Route::get('order/thank-you-page/{order}',[OrderController::class,'thanks'])->name('order.thanks');
- Route::get('order/checkout',[OrderController::class,'checkout'])->name('checkout');
+//frontend route
+Route::get('/', [FrontendController::class,'index'])->name('home');
+Route::get('/category-product/{id}', [FrontendController::class,'categoryWiseShow'])->name('category');
+Route::post('order/store',[OrderController::class,'store'])->name('order.store');
+Route::get('product/fetch/{id}',[FrontendController::class,'productFetch'])->name('product.fetch');
+Route::get('order/thank-you-page/{order}',[OrderController::class,'thanks'])->name('order.thanks');
+Route::get('order/checkout',[OrderController::class,'checkout'])->name('checkout');
+Route::get('/product_details/{id}',[ProductController::class,'product_details'])->name('product_details');
+
 
  //end frontend route
 
@@ -87,6 +89,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/edit/{id}',[ProductController::class,'edit'])->name('edit');
         Route::put('/update/{id}',[ProductController::class,'update'])->name('update');
         Route::get('/delete/{id}',[ProductController::class,'destroy'])->name('destroy');
+        Route::get('/show_gallery/{id}',[ProductController::class,'show_gallery'])->name('product_gallery');
+       
     });
 
     //Order Management
