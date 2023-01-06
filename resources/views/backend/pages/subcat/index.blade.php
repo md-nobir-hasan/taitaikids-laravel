@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Category Management')
+@section('title', 'Sub-category Management')
 
 @push('third_party_stylesheets')
     <link href="{{ asset('assets/backend/js/DataTable/datatables.min.css') }}" rel="stylesheet">
@@ -16,10 +16,10 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="float-left">
-                            <h4>View Category</h4>
+                            <h4>View Sub-category</h4>
                         </span>
                         <span class="float-right">
-                            <a href="{{ route('category.create') }}" class="btn btn-info">Add new Category</a>
+                            <a href="{{ route('subcat.create') }}" class="btn btn-info">Add new Sub-category</a>
                         </span>
                     </div>
                     <div class="card-body">
@@ -31,15 +31,17 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Category Name</th>
-                                        <th>Category Logo</th>
-                                        <th>Category Status</th>
+                                        <th>Sub-category Name</th>
+                                        <th>subcat Logo</th>
+                                        <th>subcat Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($categories as $key => $value)
+                                    @forelse($subcats as $key => $value)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
+                                            <td>{{ $value->cat->title }}</td>
                                             <td>{{ $value->title }}</td>
                                             <td><img src="{{ asset($value->img) }}"
                                                     class="rounded img-thumbnail secreen-logo" alt="{{ $value->title }}">
@@ -47,11 +49,11 @@
                                             <td>{{ $value->status }}</td>
                                             <td class="text-middle py-0 align-middle">
                                                 <div class="btn-group">
-                                                    <a href="{{ route('category.edit', $value->id) }}"
+                                                    <a href="{{ route('subcat.edit', $value->id) }}"
                                                         class="btn btn-dark btnEdit"><i class="fas fa-edit"></i></a>
                                                     {{-- @endif --}}
-                                                    {{-- @if (Auth::user()->can('delete Category') || Auth::user()->role->id == 1) --}}
-                                                    <a href="{{ route('category.destroy', $value->id) }}"
+                                                    {{-- @if (Auth::user()->can('delete subcat') || Auth::user()->role->id == 1) --}}
+                                                    <a href="{{ route('subcat.destroy', $value->id) }}"
                                                         class="btn btn-danger btnDelete"><i class="fas fa-trash"></i></a>
                                                     {{-- @endif --}}
                                                 </div>

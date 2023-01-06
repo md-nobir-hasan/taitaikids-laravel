@@ -11,9 +11,11 @@
             <ul class="responsive-menu w-100">
                 @foreach ($categories as $category)
                     <li class="has-child">
-                        {{-- <i class="fa-solid fa-child"></i> --}}
+
                         <a href="{{ route('category', [$category->id]) }}"
                             class="{{ Request::is("category-product/$category->id") ? 'active' : '' }}">
+                            <img src="{{ $category->img }}" alt="{{ $category->title }}" class="rounded" height="20px"
+                                width="20px">
                             <span>{{ $category->title }}</span>
                         </a>
                     </li>

@@ -42,6 +42,9 @@ class CategoryController extends Controller
         $this->validate($request,[
             'title'=>'string|required',
             'status'=>'required|in:active,inactive',
+            'img'=>'required',
+        ],[],[
+            'img' => "Logo img"
         ]);
         $data= $request->all();
         $slug=Str::slug($request->title);
@@ -50,7 +53,14 @@ class CategoryController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        // return $data;
+
+        if($request->file('img')){
+            $file= $request->file('img');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('brand'), $filename);
+            $data['img']= 'brand/'.$filename;
+        }
+
         $status=Category::create($data);
         if($status){
             request()->session()->flash('success','Category successfully added');
@@ -102,7 +112,14 @@ class CategoryController extends Controller
             'status'=>'required|in:active,inactive',
         ]);
         $data= $request->all();
-        // return $data;
+
+        if($request->file('img')){
+            $file= $request->file('img');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('brand'), $filename);
+            $data['img']= 'brand/'.$filename;
+        }
+        
         $status=$category->fill($data)->save();
         if($status){
             request()->session()->flash('success','Category successfully updated');

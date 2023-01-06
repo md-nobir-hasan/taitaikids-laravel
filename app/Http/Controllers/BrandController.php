@@ -39,6 +39,9 @@ class BrandController extends Controller
     {
         $this->validate($request,[
             'title'=>'string|required',
+            'img'=>'required',
+        ],[],[
+            'img' => "Logo img"
         ]);
         $data=$request->all();
         $slug=Str::slug($request->title);
@@ -47,7 +50,14 @@ class BrandController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        // return $data;
+
+        if($request->file('img')){
+            $file= $request->file('img');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('brand'), $filename);
+            $data['img']= 'brand/'.$filename;
+        }
+
         $status=Brand::create($data);
         if($status){
             request()->session()->flash('success','Brand successfully created');
@@ -77,6 +87,7 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
+        
         $brand=Brand::find($id);
         if(!$brand){
             request()->session()->flash('error','Brand not found');
@@ -94,12 +105,20 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brand=Brand::find($id);
         $this->validate($request,[
             'title'=>'string|required',
         ]);
-        $data=$request->all();
 
+        $brand=Brand::find($id);
+        $data=$request->all();
+        
+        if($request->file('img')){
+            $file= $request->file('img');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('brand'), $filename);
+            $data['img']= 'brand/'.$filename;
+        }
+        
         $status=$brand->fill($data)->save();
         if($status){
             request()->session()->flash('success','Brand successfully updated');

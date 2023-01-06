@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-10 m-auto">
-                                <form method="post" action="{{ route('category.store') }}">
+                                <form method="post" action="{{ route('category.store') }}" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="inputTitle" class="col-form-label">Title <span
@@ -32,6 +32,16 @@
                                         <input id="inputTitle" type="text" name="title" placeholder="Enter title"
                                             value="{{ old('title') }}" class="form-control">
                                         @error('title')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="img" class="col-form-label">Category Logo <span
+                                                class="text-danger">*</span></label>
+                                        <input id="img" type="file" name="img" placeholder="Enter logo"
+                                            value="{{ old('img') }}" class="form-control">
+                                        @error('img')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>

@@ -47,6 +47,33 @@
     </ul>
 </li>
 
+{{-- Sub-category Management  --}}
+<li class="nav-item {{ Request::is('subcat/*') ? 'menu-open' : '' }}">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            Sub-category
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('subcat.index') }}"
+                class="nav-link {{ Request::is('subcat/index') ? 'active' : '' }}">
+                <i class="nav-icon far fa-circle"></i>
+                <p>Show Sub-category</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('subcat.create') }}"
+                class="nav-link {{ Request::is('subcat/create') ? 'active' : '' }}">
+                <i class="nav-icon far fa-circle"></i>
+                <p>Add Sub-category</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
 {{-- Shipping Management  --}}
 <li class="nav-item {{ Request::is('shipping/*') ? 'menu-open' : '' }}">
     <a href="#" class="nav-link">

@@ -1,4 +1,4 @@
-@php 
+@php
     $site_info = App\Models\CompanyInfo::first();
     $site_contact_info = App\Models\CompanyContact::first();
 @endphp
@@ -11,7 +11,7 @@
     <title> @yield('title', $site_info->title) </title>
 
     <!-- Favicon-->
-    <link rel="icon" href="{{asset($site_info->logo)}}" type="image/png">
+    <link rel="icon" href="{{ asset($site_info->logo) }}" type="image/png">
 
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
@@ -20,7 +20,17 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     @stack('third_party_stylesheets')
+    <style>
+        img.secreen-logo {
+            max-width: 90px !important;
+            max-height: 90px !important;
+        }
 
+        table tr th,
+        table tr td {
+            vertical-align: middle !important;
+        }
+    </style>
     @stack('page_css')
 </head>
 

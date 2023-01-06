@@ -10,6 +10,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
+use App\Http\Controllers\SubcatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,16 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/edit/{id}',[CategoryController::class,'edit'])->name('edit');
         Route::patch('/update/{id}',[CategoryController::class,'update'])->name('update');
         Route::get('/delete/{id}',[CategoryController::class,'destroy'])->name('destroy');
+    });
+
+     //Sub-category Mangement
+    Route::group(['as' => 'subcat.', 'prefix' => 'subcat'], function() {
+        Route::get('/index',[SubcatController::class,'index'])->name('index');
+        Route::get('/create',[SubcatController::class,'create'])->name('create');
+        Route::post('/store',[SubcatController::class,'store'])->name('store');
+        Route::get('/edit/{id}',[SubcatController::class,'edit'])->name('edit');
+        Route::patch('/update/{id}',[SubcatController::class,'update'])->name('update');
+        Route::get('/delete/{id}',[SubcatController::class,'destroy'])->name('destroy');
     });
 
     //Brand Mangement

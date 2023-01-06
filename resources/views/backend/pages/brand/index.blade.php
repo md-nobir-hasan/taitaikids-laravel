@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="float-left">
-                            <h4>View Brand</h4>
+                            <h1>View Brand</h1>
                         </span>
                         <span class="float-right">
                             <a href="{{ route('brand.create') }}" class="btn btn-info">Add new Brand</a>
@@ -31,6 +31,7 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Brand Name</th>
+                                        <th>Brand logo</th>
                                         <th>Brand Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -40,6 +41,8 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $value->title }}</td>
+                                            <td><img src="{{ asset($value->img) }}" alt="{{ $value->title }}"
+                                                    class="rounded img-thumbnail secreen-logo"></td>
                                             <td>{{ $value->status }}</td>
                                             <td class="text-middle py-0 align-middle">
                                                 <div class="btn-group">
