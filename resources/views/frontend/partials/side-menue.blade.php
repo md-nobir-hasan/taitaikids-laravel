@@ -14,8 +14,10 @@
 
                         <a href="{{ route('category', [$category->id]) }}"
                             class="{{ Request::is("category-product/$category->id") ? 'active' : '' }}">
-                            <img src="{{ $category->img }}" alt="{{ $category->title }}" class="rounded" height="20px"
-                                width="20px">
+                            @if (isset($category->img))
+                                <img src="{{ $category->img }}" alt="{{ $category->title }}" class="rounded"
+                                    height="20px" width="20px">
+                            @endif
                             <span>{{ $category->title }}</span>
                         </a>
                     </li>

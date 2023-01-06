@@ -24,7 +24,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-10 m-auto">
-                                <form method="post" action="{{ route('category.update', $category->id) }}">
+                                <form method="post" action="{{ route('category.update', $category->id) }}"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PATCH')
                                     <div class="form-group">
@@ -41,7 +42,7 @@
                                         <label for="img" class="col-form-label">Category Logo <span
                                                 class="text-danger">*</span></label>
                                         <input id="img" type="file" name="img" placeholder="Enter logo"
-                                            value="{{ $category->img }}" class="form-control">
+                                            value="{{ $category->img ?? '' }}" class="form-control">
                                         @error('img')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -52,7 +53,8 @@
                                         <select name="status" class="form-control">
                                             <option value="active" {{ $category->status == 'active' ? 'selected' : '' }}>
                                                 Active</option>
-                                            <option value="inactive" {{ $category->status == 'inactive' ? 'selected' : '' }}>
+                                            <option value="inactive"
+                                                {{ $category->status == 'inactive' ? 'selected' : '' }}>
                                                 Inactive</option>
                                         </select>
                                         @error('status')

@@ -57,8 +57,8 @@ class CategoryController extends Controller
         if($request->file('img')){
             $file= $request->file('img');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('brand'), $filename);
-            $data['img']= 'brand/'.$filename;
+            $file-> move(public_path('cat'), $filename);
+            $data['img']= 'cat/'.$filename;
         }
 
         $status=Category::create($data);
@@ -112,14 +112,14 @@ class CategoryController extends Controller
             'status'=>'required|in:active,inactive',
         ]);
         $data= $request->all();
-
+        
         if($request->file('img')){
             $file= $request->file('img');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('brand'), $filename);
-            $data['img']= 'brand/'.$filename;
+            $file-> move(public_path('cat'), $filename);
+            $data['img']= 'cat/'.$filename;
         }
-        
+
         $status=$category->fill($data)->save();
         if($status){
             request()->session()->flash('success','Category successfully updated');
